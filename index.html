@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>District Quetta Medicine Store Management</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- AUTHENTICATION AREA -->
+
+    <div id="authPage">
+
+        <div class="background">
+            <div class="bg-circle circle-one"></div>
+            <div class="bg-circle circle-two"></div>
+        </div>
+
+        <header class="header">
+
+            <div class="brand">
+
+                <!-- OLD LOGO STYLE -->
+                <div class="brand-icon">
+                    <span>+</span>
+                </div>
+
+                <div class="brand-info">
+                    <h2>District Quetta</h2>
+                    <p>Medicine Store Management</p>
+                </div>
+
+            </div>
+
+            <button
+                class="theme-switch"
+                id="themeBtn"
+                type="button"
+            >
+                <span class="theme-track">
+                    <span class="theme-icon sun">☀</span>
+                    <span class="theme-icon moon">☾</span>
+                    <span class="theme-knob"></span>
+                </span>
+            </button>
+
+        </header>
+
+
+        <main class="main-container">
+
+            <div class="auth-card">
+
+                <!-- LEFT -->
+
+                <section class="welcome-section">
+
+                    <div class="medical-symbol">
+                        <span>+</span>
+                    </div>
+
+                    <span class="system-label">
+                        DISTRICT QUETTA
+                    </span>
+
+                    <h1>
+                        Medicine Store
+                        <span>Management</span>
+                    </h1>
+
+                    <p class="welcome-description">
+                        A professional system for managing hospitals,
+                        medicines, inventory and monthly medicine records.
+                    </p>
+
+                    <div class="features">
+
+                        <div class="feature">
+                            <span class="check">✓</span>
+                            Hospital medicine tracking
+                        </div>
+
+                        <div class="feature">
+                            <span class="check">✓</span>
+                            Monthly medicine records
+                        </div>
+
+                        <div class="feature">
+                            <span class="check">✓</span>
+                            Secure staff management
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- RIGHT -->
+
+                <section class="form-section">
+
+
+                    <!-- LOGIN -->
+
+                    <div
+                        class="form-container active"
+                        id="loginForm"
+                    >
+
+                        <div class="form-heading">
+
+                            <span class="form-label">
+                                WELCOME BACK
+                            </span>
+
+                            <h2>Sign in to your account</h2>
+
+                            <p>
+                                Enter your CNIC ID and password to continue.
+                            </p>
+
+                        </div>
+
+
+                        <form id="loginFormElement">
+
+                            <div class="input-group">
+
+                                <label>CNIC ID</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ID
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="loginCnic"
+                                        placeholder="Enter 13 digit CNIC"
+                                        inputmode="numeric"
+                                        maxlength="13"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>Password</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="loginPassword"
+                                        placeholder="Enter your password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword('loginPassword', this)"
+                                    >
+                                        <span class="eye-icon"></span>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="form-options">
+
+                                <label class="remember-control">
+
+                                    <input
+                                        type="checkbox"
+                                        id="rememberMe"
+                                    >
+
+                                    <span class="custom-check">
+                                        <span>✓</span>
+                                    </span>
+
+                                    <span class="remember-text">
+                                        Remember me
+                                    </span>
+
+                                </label>
+
+
+                                <button
+                                    type="button"
+                                    class="forgot-btn"
+                                    onclick="showForgot()"
+                                >
+                                    Forgot password?
+                                </button>
+
+                            </div>
+
+
+                            <button
+                                class="submit-btn"
+                                type="submit"
+                            >
+                                <span>Sign In</span>
+                                <span class="arrow">→</span>
+                            </button>
+
+                        </form>
+
+
+                        <div class="switch-form">
+
+                            <span>
+                                Don't have an account?
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="showRegister()"
+                            >
+                                Create account
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- REGISTER -->
+
+                    <div
+                        class="form-container"
+                        id="registerForm"
+                    >
+
+                        <div class="form-heading">
+
+                            <span class="form-label">
+                                GET STARTED
+                            </span>
+
+                            <h2>Create an account</h2>
+
+                            <p>
+                                Register your staff account.
+                            </p>
+
+                        </div>
+
+
+                        <form id="registerFormElement">
+
+                            <div class="input-group">
+
+                                <label>Full Name</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="registerName"
+                                        placeholder="Enter your full name"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>CNIC ID</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ID
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="registerCnic"
+                                        placeholder="Enter 13 digit CNIC"
+                                        inputmode="numeric"
+                                        maxlength="13"
+                                        required
+                                    >
+
+                                </div>
+
+                                <small class="input-hint">
+                                    Enter numbers only.
+                                </small>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>Password</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="registerPassword"
+                                        placeholder="Create a password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword('registerPassword', this)"
+                                    >
+                                        <span class="eye-icon"></span>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>Confirm Password</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="confirmPassword"
+                                        placeholder="Confirm your password"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="submit-btn"
+                                type="submit"
+                            >
+                                <span>Create Account</span>
+                                <span class="arrow">→</span>
+                            </button>
+
+                        </form>
+
+
+                        <div class="switch-form">
+
+                            <span>
+                                Already have an account?
+                            </span>
+
+                            <button
+                                type="button"
+                                onclick="showLogin()"
+                            >
+                                Sign in
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- FORGOT PASSWORD: CNIC CHECK -->
+
+                    <div
+                        class="form-container"
+                        id="forgotForm"
+                    >
+
+                        <div class="form-heading">
+
+                            <span class="form-label">
+                                ACCOUNT RECOVERY
+                            </span>
+
+                            <h2>Forgot your password?</h2>
+
+                            <p>
+                                Enter your CNIC to check your account.
+                            </p>
+
+                        </div>
+
+
+                        <form id="forgotFormElement">
+
+                            <div class="input-group">
+
+                                <label>CNIC ID</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ID
+                                    </span>
+
+                                    <input
+                                        type="text"
+                                        id="forgotCnic"
+                                        placeholder="Enter 13 digit CNIC"
+                                        inputmode="numeric"
+                                        maxlength="13"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="submit-btn"
+                                type="submit"
+                            >
+                                <span>Check CNIC</span>
+                                <span class="arrow">→</span>
+                            </button>
+
+                        </form>
+
+
+                        <div class="back-login">
+
+                            <button
+                                type="button"
+                                onclick="showLogin()"
+                            >
+                                ← Back to Sign In
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- CHANGE PASSWORD -->
+
+                    <div
+                        class="form-container"
+                        id="changePasswordForm"
+                    >
+
+                        <div class="form-heading">
+
+                            <span class="form-label">
+                                ACCOUNT VERIFIED
+                            </span>
+
+                            <h2>Change your password</h2>
+
+                            <p>
+                                Create a new password for your account.
+                            </p>
+
+                        </div>
+
+
+                        <form id="changePasswordFormElement">
+
+                            <div class="verified-user">
+
+                                <div class="verified-icon">
+                                    ✓
+                                </div>
+
+                                <div>
+                                    <strong id="verifiedUserName">
+                                        Account found
+                                    </strong>
+
+                                    <small>
+                                        CNIC verified successfully
+                                    </small>
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>New Password</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="newPassword"
+                                        placeholder="Enter new password"
+                                        required
+                                    >
+
+                                    <button
+                                        type="button"
+                                        class="password-toggle"
+                                        onclick="togglePassword('newPassword', this)"
+                                    >
+                                        <span class="eye-icon"></span>
+                                    </button>
+
+                                </div>
+
+                            </div>
+
+
+                            <div class="input-group">
+
+                                <label>Confirm New Password</label>
+
+                                <div class="input-box">
+
+                                    <span class="input-icon">
+                                        ●
+                                    </span>
+
+                                    <input
+                                        type="password"
+                                        id="confirmNewPassword"
+                                        placeholder="Confirm new password"
+                                        required
+                                    >
+
+                                </div>
+
+                            </div>
+
+
+                            <button
+                                class="submit-btn"
+                                type="submit"
+                            >
+                                <span>Change Password</span>
+                                <span class="arrow">→</span>
+                            </button>
+
+                        </form>
+
+
+                        <div class="back-login">
+
+                            <button
+                                type="button"
+                                onclick="showLogin()"
+                            >
+                                ← Back to Sign In
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+
+            <div class="copyright">
+                © 2026 District Quetta Medicine Store Management
+            </div>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- DASHBOARD -->
+
+    <div
+        id="dashboardPage"
+        class="dashboard-page"
+    >
+
+        <aside class="sidebar">
+
+            <div class="sidebar-brand">
+                <div class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3v18M3 12h18"/></svg></div>
+                <div class="brand-copy">
+                    <strong>District Quetta</strong>
+                    <small>Medicine Store</small>
+                </div>
+                <span class="brand-status"></span>
+            </div>
+
+            <div class="menu-label">MAIN MENU</div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active" onclick="openDashboardSection('dashboard', this)">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 10.8 12 3l9 7.8V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span><span class="nav-text">Dashboard</span><span class="nav-arrow">›</span>
+                </button>
+                <button class="nav-item" onclick="openDashboardSection('hospitals', this)">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V8.5L12 4l8 4.5V21M8 21v-4h8v4M9 10h6M12 7v6M9 13h6"/></svg></span><span class="nav-text">Hospitals</span><span class="nav-arrow">›</span>
+                </button>
+                <button class="nav-item" onclick="openDashboardSection('medicines', this)">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.5 4.5a4 4 0 0 1 5.66 0l6.34 6.34a4 4 0 0 1 0 5.66l-1 1a4 4 0 0 1-5.66 0L6.5 11.16a4 4 0 0 1 0-5.66zM8 8l8 8M5 12h6M8 9v6"/></svg></span><span class="nav-text">Medicines &amp; Stock</span><span class="nav-arrow">›</span>
+                </button>
+                <button class="nav-item" onclick="openDashboardSection('inventory', this)">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"/></svg></span><span class="nav-text">Medicine Outflow</span><span class="nav-arrow">›</span>
+                </button>
+                <button class="nav-item" onclick="openDashboardSection('monthly', this)">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="2"/><path d="M8 3v4M16 3v4M4 9h16M8 13h3M8 16h5"/></svg></span><span class="nav-text">Monthly Records</span><span class="nav-arrow">›</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-divider"></div>
+            <div class="menu-label">SYSTEM</div>
+
+            <div class="sidebar-bottom">
+                <button class="nav-item theme-nav" id="dashboardThemeBtn" onclick="toggleDashboardTheme()" type="button">
+                    <span class="nav-icon" aria-hidden="true" id="dashboardThemeIcon"><svg viewBox="0 0 24 24"><path d="M20 15.2A8.5 8.5 0 0 1 8.8 4 8.5 8.5 0 1 0 20 15.2z"/></svg></span><span class="nav-text" id="dashboardThemeText">Dark theme</span><span class="nav-arrow">›</span>
+                </button>
+                <button class="logout-btn" onclick="logout()" type="button">
+                    <span class="nav-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5M15 8l4 4-4 4M9 12h10"/></svg></span><span class="nav-text">Sign out</span>
+                </button>
+            </div>
+
+            <div class="sidebar-footer">
+                <span>SECURE STORE PORTAL</span>
+                <b>v1.0</b>
+            </div>
+
+        </aside>
+
+        <main class="dashboard-main">
+
+            <header class="dashboard-header">
+                <div class="header-title-block">
+                    <span class="dashboard-label"><i></i> MEDICINE STORE MANAGEMENT</span>
+                    <h1 id="dashboardTitle">Dashboard</h1>
+                    <p id="dashboardSubtitle">A clear view of your store operations, supplies and hospital activity.</p>
+                </div>
+
+                <div class="header-actions">
+                    <button class="header-icon-btn" type="button" aria-label="Notifications">
+                        <span class="header-bell" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M18 9a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9M10 21h4"/></svg></span><i class="notification-dot"></i>
+                    </button>
+                    <button class="dashboard-user" type="button" onclick="openProfileMenu()" aria-label="Open profile menu">
+                        <div class="user-avatar"><span id="userInitial">U</span><i></i></div>
+                        <div class="user-meta">
+                            <strong id="dashboardUserName">Store User</strong>
+                            <small>Store Staff</small>
+                        </div>
+                        <span class="user-chevron">⌄</span>
+                    </button>
+                </div>
+            </header>
+
+
+
+            <!-- DASHBOARD CONTENT -->
+
+            <section
+                id="dashboardSection"
+                class="dashboard-section active"
+            >
+
+                <div class="date-card">
+
+                    <div class="date-icon">
+                        ◷
+                    </div>
+
+                    <div>
+
+                        <span>
+                            TODAY
+                        </span>
+
+                        <strong id="todayDate">
+                            Loading...
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- STAT CARDS -->
+
+                <div class="stat-grid">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 21V8.5L12 4l8 4.5V21M8 21v-4h8v4M9 10h6M12 7v6M9 13h6"/></svg></div>
+
+                        <div>
+                            <span>Total Hospitals</span>
+                            <strong id="totalHospitals">0</strong>
+                            <small>Registered hospitals</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></svg></div>
+
+                        <div>
+                            <span>Total Medicines</span>
+                            <strong id="totalMedicines">
+                                0
+                            </strong>
+                            <small>Medicine items</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon orange" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20V5M7 10l5-5 5 5M5 20h14"/></svg></div>
+
+                        <div>
+                            <span>Distributed Today</span>
+                            <strong id="distributedToday">0</strong>
+                            <small>Medicine units</small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon red" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 21 20H3zM12 9v5M12 17h.01"/></svg></div>
+
+                        <div>
+                            <span>Low Stock</span>
+                            <strong id="lowStockCount">0</strong>
+                            <small>Need attention</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- MAIN DASHBOARD GRID -->
+
+                <div class="dashboard-grid">
+
+
+                    <!-- HOSPITAL OVERVIEW -->
+
+                    <div class="dashboard-panel hospital-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <h2>Hospital Overview</h2>
+                                <p>
+                                    Medicine distribution by hospital
+                                </p>
+                            </div>
+
+                            <button
+                                onclick="openDashboardSectionByName('hospitals')"
+                            >
+                                View All
+                            </button>
+
+                        </div>
+
+
+                        <div class="hospital-list" id="dashboardHospitalList"></div>
+
+                    </div>
+
+
+
+                    <!-- QUICK ACTIONS -->
+
+                    <div class="dashboard-panel">
+
+                        <div class="panel-heading">
+
+                            <div>
+                                <h2>Quick Actions</h2>
+                                <p>
+                                    Frequently used functions
+                                </p>
+                            </div>
+
+                        </div>
+
+
+                        <div class="quick-actions">
+
+                            <button
+                                onclick="openDashboardSectionByName('hospitals')"
+                            >
+                                <span class="quick-icon blue">
+                                    ⌂
+                                </span>
+
+                                <span>
+                                    <strong>Add Hospital</strong>
+                                    <small>Register a hospital</small>
+                                </span>
+
+                                <b>→</b>
+
+                            </button>
+
+
+                            <button
+                                onclick="openDashboardSectionByName('medicines')"
+                            >
+                                <span class="quick-icon green">
+                                    ✚
+                                </span>
+
+                                <span>
+                                    <strong>Add Medicine</strong>
+                                    <small>Add medicine information</small>
+                                </span>
+
+                                <b>→</b>
+
+                            </button>
+
+
+                            <button
+                                onclick="openDashboardSectionByName('inventory')"
+                            >
+                                <span class="quick-icon orange">
+                                    ⇧
+                                </span>
+
+                                <span>
+                                    <strong>Record Distribution</strong>
+                                    <small>Record hospital supply</small>
+                                </span>
+
+                                <b>→</b>
+
+                            </button>
+
+
+                            <button
+                                onclick="openDashboardSectionByName('reports')"
+                            >
+                                <span class="quick-icon purple">
+                                    ▥
+                                </span>
+
+                                <span>
+                                    <strong>View Reports</strong>
+                                    <small>Analyze store records</small>
+                                </span>
+
+                                <b>→</b>
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- RECENT ACTIVITY -->
+
+                <div class="dashboard-panel recent-panel">
+
+                    <div class="panel-heading">
+
+                        <div>
+                            <h2>Recent Medicine Activity</h2>
+                            <p>
+                                Latest recorded medicine movements
+                            </p>
+                        </div>
+
+                        <button
+                            onclick="openDashboardSectionByName('inventory')"
+                        >
+                            View Records
+                        </button>
+
+                    </div>
+
+
+                    <div class="activity-table">
+                        <div class="table-row table-head">
+                            <span>Medicine</span><span>Hospital</span><span>Quantity</span><span>Date</span><span>Status</span>
+                        </div>
+                        <div id="dashboardActivityList"></div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+
+            <!-- PLACEHOLDER SECTIONS -->
+
+            <section
+                id="hospitalsSection"
+                class="dashboard-section"
+            >
+                <div class="section-toolbar">
+                    <div>
+                        <span class="section-kicker">HOSPITAL DIRECTORY</span>
+                        <h2>Hospitals</h2>
+                        <p>Register and manage hospitals connected with the medicine store.</p>
+                    </div>
+                    <button class="add-hospital-btn" type="button" onclick="openHospitalModal()">
+                        <span class="add-hospital-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+                        <span>Add Hospital</span>
+                    </button>
+                </div>
+                <div class="hospital-management-card">
+                    <div class="hospital-management-head">
+                        <div class="management-icon"><svg viewBox="0 0 24 24"><path d="M4 21V8.5L12 4l8 4.5V21M8 21v-4h8v4M9 10h6M12 7v6M9 13h6"/></svg></div>
+                        <div><strong id="hospitalDirectoryCount">12 Registered Hospitals</strong><span>Hospital records are stored locally in this demo.</span></div>
+                    </div>
+                    <div id="hospitalDirectoryList" class="hospital-directory-list"></div>
+                </div>
+            </section>
+
+
+            <section id="medicinesSection" class="dashboard-section">
+                <div class="section-toolbar medicine-section-toolbar">
+                    <div>
+                        <span class="section-kicker">MEDICINE &amp; STOCK MANAGEMENT</span>
+                        <h2>Medicine &amp; Stock</h2>
+                        <p>Manage medicine names, stock, expiry dates and unit prices professionally. Stock can be changed directly from the list.</p>
+                    </div>
+                    <button class="add-hospital-btn add-medicine-btn" type="button" onclick="openMedicineModal()">
+                        <span class="add-hospital-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+                        <span>Add Medicine</span>
+                    </button>
+                </div>
+
+                <div class="medicine-management-card">
+                    <div class="medicine-management-head">
+                        <div class="management-icon medicine-management-icon"><svg viewBox="0 0 24 24"><path d="M7.5 4.5a4 4 0 0 1 5.66 0l6.34 6.34a4 4 0 0 1 0 5.66l-1 1a4 4 0 0 1-5.66 0L6.5 11.16a4 4 0 0 1 0-5.66zM8 8l8 8"/></svg></div>
+                        <div><strong id="medicineDirectoryCount">0 Medicine &amp; Stock Records</strong><span>Medicine records are stored locally in this demo.</span></div>
+                    </div>
+                    <div class="medicine-directory-search-wrap">
+                        <label class="medicine-directory-search">
+                            <span>Search Medicine</span>
+                            <div class="medicine-directory-search-box">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg>
+                                <input id="medicineDirectorySearch" type="search" autocomplete="off" placeholder="Search and select a medicine...">
+                            </div>
+                            <div id="medicineDirectoryResults" class="medicine-search-results" hidden></div>
+                        </label>
+                    </div>
+
+                    <div class="medicine-filter-bar" role="group" aria-label="Medicine category filters">
+                        <button type="button" class="medicine-filter active" data-filter="ALL" onclick="filterMedicines('ALL', this)">All</button>
+                        <button type="button" class="medicine-filter" data-filter="TAB" onclick="filterMedicines('TAB', this)">TAB</button>
+                        <button type="button" class="medicine-filter" data-filter="SYP" onclick="filterMedicines('SYP', this)">SYP</button>
+                        <button type="button" class="medicine-filter" data-filter="CAP" onclick="filterMedicines('CAP', this)">CAP</button>
+                        <button type="button" class="medicine-filter" data-filter="INJ" onclick="filterMedicines('INJ', this)">INJ</button>
+                        <button type="button" class="medicine-filter" data-filter="OTHER" onclick="filterMedicines('OTHER', this)">OTHER</button>
+                    </div>
+                    <div class="medicine-filter-bar month-filter-bar" role="group" aria-label="Expiry month filters">
+                        <button type="button" class="medicine-filter month-filter active" data-month="ALL" onclick="filterMedicineMonth('ALL', this)">All Months</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="1" onclick="filterMedicineMonth('1', this)">Jan</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="2" onclick="filterMedicineMonth('2', this)">Feb</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="3" onclick="filterMedicineMonth('3', this)">Mar</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="4" onclick="filterMedicineMonth('4', this)">Apr</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="5" onclick="filterMedicineMonth('5', this)">May</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="6" onclick="filterMedicineMonth('6', this)">Jun</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="7" onclick="filterMedicineMonth('7', this)">Jul</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="8" onclick="filterMedicineMonth('8', this)">Aug</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="9" onclick="filterMedicineMonth('9', this)">Sep</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="10" onclick="filterMedicineMonth('10', this)">Oct</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="11" onclick="filterMedicineMonth('11', this)">Nov</button>
+                        <button type="button" class="medicine-filter month-filter" data-month="12" onclick="filterMedicineMonth('12', this)">Dec</button>
+                    </div>
+                    <div class="medicine-table-head">
+                        <span>S.No</span><span>Medicine</span><span>Expiry Date</span><span>Category</span><span>Stock</span><span>Unit Price</span><span>Actions</span>
+                    </div>
+                    <div id="medicineDirectoryList" class="medicine-directory-list"></div>
+                </div>
+            </section>
+
+
+            <section id="inventorySection" class="dashboard-section">
+                <div class="section-toolbar outflow-toolbar">
+                    <div>
+                        <span class="section-kicker">MEDICINE DISTRIBUTION</span>
+                        <h2>Medicine Outflow</h2>
+                        <p>Record medicine supplied to hospitals and track every completed outflow.</p>
+                    </div>
+                    <button class="add-hospital-btn" type="button" onclick="openOutflowModal()">
+                        <span class="add-hospital-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span>
+                        <span>Medicine Outflow</span>
+                    </button>
+                </div>
+                <div class="outflow-management-card">
+                    <div class="outflow-management-head">
+                        <div class="management-icon"><svg viewBox="0 0 24 24"><path d="M4 7h16v13H4zM7 4h10v3H7zM8 11h8M8 15h5"/></svg></div>
+                        <div><strong id="outflowDirectoryCount">0 Outflow Records</strong><span>Completed medicine distributions are stored locally.</span></div>
+                    </div>
+                    <div class="outflow-directory-filters" aria-label="Filter medicine outflow records">
+                        <label><span>Search hospital or medicine</span><input id="outflowDirectorySearch" type="search" placeholder="Search records..."></label>
+                        <label><span>Hospital Type</span><select id="outflowDirectoryType"><option value="ALL">All Hospital Types</option><option value="RHC">RHC</option><option value="MCH">MCH</option><option value="CD">CD</option></select></label>
+                        <label><span>Hospital</span><select id="outflowDirectoryHospital"><option value="ALL">All Hospitals</option></select></label>
+                        <label><span>Month</span><select id="outflowDirectoryMonth"><option value="ALL">All Months</option></select></label>
+                        <label><span>Year</span><select id="outflowDirectoryYear"><option value="ALL">All Years</option></select></label>
+                        <button type="button" class="outflow-directory-reset" onclick="resetOutflowDirectoryFilters()">Reset Filters</button>
+                    </div>
+                    <div class="outflow-table-head"><span>S.No</span><span>Hospital</span><span>Type</span><span>Date</span><span>Medicines</span><span>Units</span><span>Total</span><span>Actions</span></div>
+                    <div id="outflowDirectoryList" class="outflow-directory-list"></div>
+                </div>
+            </section>
+            <section id="monthlySection" class="dashboard-section">
+                <div class="section-toolbar monthly-toolbar">
+                    <div>
+                        <span class="section-kicker">MEDICINE SUPPLY REPORT</span>
+                        <h2>Monthly Records</h2>
+                        <p>See exactly what medicine was supplied, how much was supplied, when it was supplied, and which hospital received it.</p>
+                    </div>
+                    <div class="monthly-toolbar-actions">
+                        <button type="button" class="monthly-tool-btn" onclick="exportMonthlyRecords()" title="Download the filtered monthly supply report">
+                            <svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg><span>Download</span>
+                        </button>
+                        <button type="button" class="monthly-tool-btn monthly-print-btn" onclick="printMonthlyRecords()" title="Print the filtered monthly report">
+                            <svg viewBox="0 0 24 24"><path d="M6 9V4h12v5M6 17H4a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2h-2M6 14h12v6H6z"/></svg><span>Print</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="monthly-summary-grid">
+                    <div class="monthly-summary-card"><span class="monthly-summary-icon blue"><svg viewBox="0 0 24 24"><path d="M7 4h10l3 3v13H4V7zM7 4v4h10V4M8 12h8M8 16h5"/></svg></span><div><small>Total Records</small><strong id="monthlyTotalRecords">0</strong></div></div>
+                    <div class="monthly-summary-card"><span class="monthly-summary-icon cyan"><svg viewBox="0 0 24 24"><path d="M5 6h14M7 6v13h10V6M9 3h6M9 10h6M9 14h4"/></svg></span><div><small>Medicine Units</small><strong id="monthlyTotalUnits">0</strong></div></div>
+                    <div class="monthly-summary-card"><span class="monthly-summary-icon violet"><svg viewBox="0 0 24 24"><path d="M4 20V8l8-4 8 4v12M8 20v-4h8v4M9 10h6M12 8v5M9 13h6"/></svg></span><div><small>Hospitals Supplied</small><strong id="monthlyHospitalCount">0</strong></div></div>
+                    <div class="monthly-summary-card"><span class="monthly-summary-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v10M15 9.5c-.7-.8-1.7-1.2-3-1.2-1.6 0-2.7.8-2.7 2s1 1.7 2.8 2c1.8.3 2.9.8 2.9 2.1s-1.1 2-2.9 2c-1.3 0-2.4-.4-3.1-1.2"/></svg></span><div><small>Paid Value</small><strong id="monthlyPaidValue">0</strong></div></div>
+                    <div class="monthly-summary-card"><span class="monthly-summary-icon amber"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg></span><div><small>Free Units</small><strong id="monthlyFreeUnits">0</strong></div></div>
+                </div>
+
+                <div class="monthly-filter-card">
+                    <div class="monthly-filter-head">
+                        <div><span class="section-kicker">FILTER &amp; SEARCH</span><strong>Monthly supply filters</strong><small>Use any combination of filters to find the exact supply records.</small></div>
+                        <button type="button" class="monthly-reset-btn" onclick="resetMonthlyFilters()"><svg viewBox="0 0 24 24"><path d="M4 7v5h5M20 17v-5h-5M6.2 12A6.5 6.5 0 0 0 17 16.5M17.8 12A6.5 6.5 0 0 0 7 7.5"/></svg><span>Reset Filters</span></button>
+                    </div>
+                    <div class="monthly-filter-grid">
+                        <label><span>Report Period</span><select id="monthlyPeriod"><option value="ALL">All Records</option><option value="DAILY">Daily</option><option value="WEEKLY">Weekly (Last 7 Days)</option><option value="MONTHLY">Monthly</option></select></label>
+                        <label class="monthly-search-field"><span>Search</span><div class="monthly-search-box"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 5 5"/></svg><input id="monthlySearch" type="search" placeholder="Search medicine or hospital..."></div></label>
+                        <label><span>Month</span><select id="monthlyMonth"><option value="ALL">All Months</option></select></label>
+                        <label><span>Year</span><select id="monthlyYear"><option value="ALL">All Years</option></select></label>
+                        <label><span>Medicine</span><select id="monthlyMedicine"><option value="ALL">All Medicines</option></select></label>
+                        <label><span>Category</span><select id="monthlyCategory"><option value="ALL">All Categories</option><option value="TAB">TAB</option><option value="SYP">SYP</option><option value="CAP">CAP</option><option value="INJ">INJ</option><option value="OTHER">OTHER</option></select></label>
+                        <label><span>Hospital Type</span><select id="monthlyHospitalType"><option value="ALL">All Hospital Types</option><option value="RHC">RHC</option><option value="MCH">MCH</option><option value="CD">CD</option></select></label>
+                        <label><span>Hospital</span><select id="monthlyHospital"><option value="ALL">All Hospitals</option></select></label>
+                        <label><span>Pricing</span><select id="monthlyPricing"><option value="ALL">All Pricing</option><option value="PAID">Paid</option><option value="FREE">Free</option></select></label>
+                    </div>
+                </div>
+
+                <div class="monthly-report-card">
+                    <div class="monthly-report-head">
+                        <div><div class="monthly-report-title"><span class="monthly-report-icon"><svg viewBox="0 0 24 24"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h5"/></svg></span><div><strong>Medicine Supply Details</strong><small id="monthlyResultLabel">All recorded distributions</small></div></div></div>
+                        <span class="monthly-result-count" id="monthlyResultCount">0 records</span>
+                    </div>
+                    <div class="monthly-table-wrap">
+                        <div class="monthly-table-head"><span>S.No</span><span>Date</span><span>Medicine</span><span>Category</span><span>Quantity</span><span>Hospital Name</span><span>Hospital Type</span><span>Pricing</span><span>Unit Price</span><span>Total</span><span>See Info</span></div>
+                        <div id="monthlyRecordsList" class="monthly-records-list"></div>
+                    </div>
+                    <div class="monthly-report-footer"><span id="monthlyFooterText">Showing all available medicine supply records.</span><strong id="monthlyFooterTotal">Total supplied: 0 units</strong></div>
+                </div>
+            </section>
+
+
+            <section
+                id="reportsSection"
+                class="dashboard-section"
+            >
+                <div class="section-placeholder">
+                    <span>▥</span>
+                    <h2>Reports</h2>
+                    <p>
+                        Professional reports will be built here.
+                    </p>
+                </div>
+            </section>
+
+
+            <section
+                id="staffSection"
+                class="dashboard-section"
+            >
+                <div class="section-placeholder">
+                    <span>♙</span>
+                    <h2>Staff</h2>
+                    <p>
+                        Staff management will be built here.
+                    </p>
+                </div>
+            </section>
+
+        </main>
+
+    </div>
+
+
+
+    <!-- PROFILE MINI PANEL -->
+    <div class="modal-backdrop" id="profileModal" onclick="closeProfileMenu(event)">
+        <div class="mini-modal profile-modal" role="dialog" aria-modal="true" aria-labelledby="profileModalTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeProfileMenu()" aria-label="Close">×</button>
+            <div class="modal-profile-head">
+                <div class="modal-profile-avatar"><span id="modalProfileInitial">U</span><i></i></div>
+                <div>
+                    <span class="modal-kicker">ACCOUNT & SECURITY</span>
+                    <h2 id="profileModalTitle">Your Profile</h2>
+                    <p id="modalProfileName">Store User</p>
+                </div>
+            </div>
+            <div class="profile-info-grid">
+                <div><span>CNIC</span><strong id="modalProfileCnic">—</strong></div>
+                <div><span>Status</span><strong><i class="status-dot"></i> Active</strong></div>
+            </div>
+            <div class="profile-actions-list">
+                <button type="button" onclick="showProfilePassword()"><span class="action-symbol"><svg viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3"/></svg></span><span><b>Change password</b><small>Update your account password</small></span><em>›</em></button>
+                <button type="button" onclick="showNotification('Account secure','Your profile is protected by your CNIC account.')"><span class="action-symbol"><svg viewBox="0 0 24 24"><path d="M12 3 20 6v5c0 5-3.4 8.3-8 10-4.6-1.7-8-5-8-10V6z"/><path d="m9 12 2 2 4-4"/></svg></span><span><b>Security status</b><small>Account protection is active</small></span><em>›</em></button>
+                <button type="button" onclick="closeProfileMenu(); logout()"><span class="action-symbol danger"><svg viewBox="0 0 24 24"><path d="M10 4H5a1 1 0 0 0-1 1v14a1 1 0 0 0 1 1h5M15 8l4 4-4 4M9 12h10"/></svg></span><span><b>Sign out</b><small>End the current session</small></span><em>›</em></button>
+            </div>
+            <div class="profile-password-panel" id="profilePasswordPanel">
+                <div class="password-panel-title"><strong>Change password</strong><button type="button" onclick="hideProfilePassword()">Cancel</button></div>
+                <label>Current password<input type="password" id="profileCurrentPassword" placeholder="Enter current password"></label>
+                <label>New password<input type="password" id="profileNewPassword" placeholder="At least 6 characters"></label>
+                <label>Confirm password<input type="password" id="profileConfirmPassword" placeholder="Confirm new password"></label>
+                <button class="modal-primary-btn" type="button" onclick="changePasswordFromProfile()">Update Password</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD HOSPITAL MINI PANEL -->
+    <div class="modal-backdrop" id="hospitalModal" onclick="closeHospitalModal(event)">
+        <div class="mini-modal hospital-modal" role="dialog" aria-modal="true" aria-labelledby="hospitalModalTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeHospitalModal()" aria-label="Close">×</button>
+            <div class="hospital-modal-icon"><svg viewBox="0 0 24 24"><path d="M4 21V8.5L12 4l8 4.5V21M8 21v-4h8v4M9 10h6M12 7v6M9 13h6"/></svg></div>
+            <span class="modal-kicker">HOSPITAL DIRECTORY</span>
+            <h2 id="hospitalModalTitle">Add Hospital</h2>
+            <p>Enter the basic hospital information to create a new record.</p>
+            <form id="addHospitalForm">
+                <div class="hospital-type-field">
+                    <span class="field-label">Hospital Type</span>
+                    <div class="hospital-type-options" role="group" aria-label="Hospital Type">
+                        <button type="button" class="hospital-type-option" data-type="RHC" onclick="selectHospitalType('RHC', this)">RHC</button>
+                        <button type="button" class="hospital-type-option" data-type="MCH" onclick="selectHospitalType('MCH', this)">MCH</button>
+                        <button type="button" class="hospital-type-option" data-type="CD" onclick="selectHospitalType('CD', this)">CD</button>
+                    </div>
+                    <input id="hospitalType" type="hidden" required>
+                </div>
+                <label>Hospital Name<input id="hospitalName" type="text" placeholder="Enter hospital name" required></label>
+                <label>Hospital Location<input id="hospitalLocation" type="text" placeholder="Enter hospital location" required></label>
+                <button class="modal-primary-btn" type="submit"><span>Add Hospital</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- HOSPITAL INFO MINI PANEL -->
+    <div class="modal-backdrop hospital-action-backdrop" id="hospitalInfoModal" onclick="closeHospitalInfo(event)">
+        <div class="mini-modal hospital-action-modal" role="dialog" aria-modal="true" aria-labelledby="hospitalInfoTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeHospitalInfo()" aria-label="Close">×</button>
+            <div class="action-modal-icon info-modal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.2v.1"/></svg></div>
+            <span class="modal-kicker">HOSPITAL INFORMATION</span>
+            <h2 id="hospitalInfoTitle">Hospital Details</h2>
+            <p>Review the information saved for this hospital.</p>
+            <div class="hospital-info-list">
+                <div><span>Hospital Name</span><strong id="infoHospitalName">—</strong></div>
+                <div><span>Hospital Type</span><strong id="infoHospitalType">—</strong></div>
+                <div><span>Location</span><strong id="infoHospitalLocation">—</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DELETE CONFIRMATION MINI PANEL -->
+    <div class="modal-backdrop hospital-action-backdrop" id="deleteHospitalModal" onclick="closeHospitalDelete(event)">
+        <div class="mini-modal hospital-action-modal delete-confirm-modal" role="dialog" aria-modal="true" aria-labelledby="deleteHospitalTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeHospitalDelete()" aria-label="Close">×</button>
+            <div class="action-modal-icon delete-modal-icon"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12M10 11v5M14 11v5"/></svg></div>
+            <span class="modal-kicker delete-kicker">DELETE HOSPITAL</span>
+            <h2 id="deleteHospitalTitle">Remove this hospital?</h2>
+            <p>This action will permanently remove <strong id="deleteHospitalName">—</strong> from the local hospital directory.</p>
+            <div class="delete-confirm-actions">
+                <button class="cancel-action-btn" type="button" onclick="closeHospitalDelete()">Cancel</button>
+                <button class="confirm-delete-btn" type="button" onclick="confirmHospitalDelete()"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12"/></svg><span>Delete</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADD MEDICINE MINI PANEL -->
+    <div class="modal-backdrop" id="medicineModal" onclick="closeMedicineModal(event)">
+        <div class="mini-modal medicine-modal" role="dialog" aria-modal="true" aria-labelledby="medicineModalTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeMedicineModal()" aria-label="Close">×</button>
+            <div class="hospital-modal-icon medicine-modal-icon"><svg viewBox="0 0 24 24"><path d="M7.5 4.5a4 4 0 0 1 5.66 0l6.34 6.34a4 4 0 0 1 0 5.66l-1 1a4 4 0 0 1-5.66 0L6.5 11.16a4 4 0 0 1 0-5.66zM8 8l8 8"/></svg></div>
+            <span class="modal-kicker">MEDICINE DIRECTORY</span>
+            <h2 id="medicineModalTitle">Add Medicine</h2>
+            <p>Enter the medicine category, name, current stock and expiry date.</p>
+            <form id="addMedicineForm">
+                <div class="hospital-type-field">
+                    <span class="field-label">Medicine Type</span>
+                    <div class="hospital-type-options medicine-type-options" role="group" aria-label="Medicine Type">
+                        <button type="button" class="hospital-type-option medicine-type-option" onclick="selectMedicineType('TAB', this)">TAB</button>
+                        <button type="button" class="hospital-type-option medicine-type-option" onclick="selectMedicineType('SYP', this)">SYP</button>
+                        <button type="button" class="hospital-type-option medicine-type-option" onclick="selectMedicineType('CAP', this)">CAP</button>
+                        <button type="button" class="hospital-type-option medicine-type-option" onclick="selectMedicineType('INJ', this)">INJ</button>
+                        <button type="button" class="hospital-type-option medicine-type-option" onclick="selectMedicineType('OTHER', this)">OTHER</button>
+                    </div>
+                    <input id="medicineType" type="hidden" required>
+                </div>
+                <label>Medicine Name<input id="medicineName" type="text" placeholder="Enter medicine name" required></label>
+                <label>Present Stock<input id="medicineStock" type="number" min="0" step="1" placeholder="Enter present stock" required></label>
+                <label>Expiry Date<input id="medicineExpiry" type="date"></label>
+                <label>Unit Price<input id="medicinePrice" type="number" min="0" step="0.01" placeholder="Enter unit price (optional)"></label>
+                <button class="modal-primary-btn" type="submit"><span>Add Medicine</span><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- MEDICINE INFO MINI PANEL -->
+    <div class="modal-backdrop hospital-action-backdrop" id="medicineInfoModal" onclick="closeMedicineInfo(event)">
+        <div class="mini-modal hospital-action-modal medicine-action-modal" role="dialog" aria-modal="true" aria-labelledby="medicineInfoTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeMedicineInfo()" aria-label="Close">×</button>
+            <div class="action-modal-icon info-modal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.2v.1"/></svg></div>
+            <span class="modal-kicker">MEDICINE INFORMATION</span>
+            <h2 id="medicineInfoTitle">Medicine Details</h2>
+            <p>Review the information saved for this medicine.</p>
+            <div class="hospital-info-list">
+                <div><span>Product Name</span><strong id="infoMedicineName">—</strong></div>
+                <div><span>Category</span><strong id="infoMedicineType">—</strong></div>
+                <div><span>Present Stock</span><strong id="infoMedicineStock">—</strong></div>
+                <div><span>Expiry Date</span><strong id="infoMedicineExpiry">—</strong></div>
+                <div><span>Unit Price</span><strong id="infoMedicinePrice">—</strong></div>
+            </div>
+            <div class="medicine-info-actions">
+                <button type="button" class="modal-primary-btn medicine-edit-from-info" onclick="openMedicineEditFromInfo()"><span>Edit Medicine</span><svg viewBox="0 0 24 24"><path d="M4 20h5L20 9l-5-5L4 15v5zM13.5 5.5l5 5"/></svg></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- EDIT MEDICINE -->
+    <div class="modal-backdrop hospital-action-backdrop" id="editMedicineModal" onclick="closeMedicineEdit(event)">
+        <div class="mini-modal medicine-action-modal edit-medicine-modal" role="dialog" aria-modal="true" aria-labelledby="editMedicineTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeMedicineEdit()" aria-label="Close">×</button>
+            <div class="action-modal-icon info-modal-icon"><svg viewBox="0 0 24 24"><path d="M4 20h5L20 9l-5-5L4 15v5zM13.5 5.5l5 5"/></svg></div>
+            <span class="modal-kicker">MEDICINES &amp; STOCK</span>
+            <h2 id="editMedicineTitle">Edit Medicine</h2>
+            <p>Change the medicine information, stock, expiry date or unit price manually.</p>
+            <form id="editMedicineForm" class="medicine-edit-form">
+                <div class="hospital-type-field">
+                    <span class="field-label">Medicine Type</span>
+                    <div class="hospital-type-options medicine-type-options" role="group" aria-label="Medicine Type">
+                        <button type="button" class="hospital-type-option edit-medicine-type-option" onclick="selectEditMedicineType('TAB', this)">TAB</button>
+                        <button type="button" class="hospital-type-option edit-medicine-type-option" onclick="selectEditMedicineType('SYP', this)">SYP</button>
+                        <button type="button" class="hospital-type-option edit-medicine-type-option" onclick="selectEditMedicineType('CAP', this)">CAP</button>
+                        <button type="button" class="hospital-type-option edit-medicine-type-option" onclick="selectEditMedicineType('INJ', this)">INJ</button>
+                        <button type="button" class="hospital-type-option edit-medicine-type-option" onclick="selectEditMedicineType('OTHER', this)">OTHER</button>
+                    </div>
+                    <input id="editMedicineType" type="hidden">
+                </div>
+                <label>Medicine Name<input id="editMedicineName" type="text" required></label>
+                <label>Present Stock<input id="editMedicineStock" type="number" min="0" step="1" required></label>
+                <label>Expiry Date<input id="editMedicineExpiry" type="date"></label>
+                <label>Unit Price<input id="editMedicinePrice" type="number" min="0" step="0.01" placeholder="Optional"></label>
+                <div class="outflow-modal-actions medicine-edit-actions">
+                    <button class="cancel-action-btn" type="button" onclick="closeMedicineEdit()">Cancel</button>
+                    <button class="modal-primary-btn" type="submit"><span>Save Changes</span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MEDICINE DELETE CONFIRMATION -->
+    <div class="modal-backdrop hospital-action-backdrop" id="deleteMedicineModal" onclick="closeMedicineDelete(event)">
+        <div class="mini-modal hospital-action-modal delete-confirm-modal medicine-action-modal" role="dialog" aria-modal="true" aria-labelledby="deleteMedicineTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeMedicineDelete()" aria-label="Close">×</button>
+            <div class="action-modal-icon delete-modal-icon"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12M10 11v5M14 11v5"/></svg></div>
+            <span class="modal-kicker delete-kicker">DELETE MEDICINE</span>
+            <h2 id="deleteMedicineTitle">Remove this medicine?</h2>
+            <p>This action will permanently remove <strong id="deleteMedicineName">—</strong> from the medicine directory.</p>
+            <div class="delete-confirm-actions">
+                <button class="cancel-action-btn" type="button" onclick="closeMedicineDelete()">Cancel</button>
+                <button class="confirm-delete-btn" type="button" onclick="confirmMedicineDelete()"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12"/></svg><span>Delete</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MEDICINE OUTFLOW MINI PANEL -->
+    <div class="modal-backdrop" id="outflowModal" onclick="closeOutflowModal(event)">
+        <div class="mini-modal outflow-modal" role="dialog" aria-modal="true" aria-labelledby="outflowModalTitle" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeOutflowModal()" aria-label="Close">×</button>
+            <div class="hospital-modal-icon"><svg viewBox="0 0 24 24"><path d="M7 4h10v5H7zM5 9h14v11H5zM9 13h6M9 17h4"/></svg></div>
+            <span class="modal-kicker">MEDICINE OUTFLOW</span>
+            <h2 id="outflowModalTitle">Add Medicine Outflow</h2>
+            <p>Add medicines one by one, then select Finish to save the complete distribution.</p>
+            <div class="outflow-form-grid">
+                <div class="outflow-field outflow-wide">
+                    <label>Medicine</label>
+                    <div class="medicine-picker"><input id="outflowMedicineSearch" type="search" autocomplete="off" placeholder="Search medicine name"><button type="button" onclick="renderOutflowMedicineOptions()" aria-label="Search medicine"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 5 5"/></svg></button></div>
+                    <div class="outflow-medicine-category-filter" role="group" aria-label="Medicine category filter">
+                        <button type="button" class="outflow-category-chip active" data-category="ALL" onclick="setOutflowMedicineCategory('ALL', this)">All</button>
+                        <button type="button" class="outflow-category-chip" data-category="TAB" onclick="setOutflowMedicineCategory('TAB', this)">TAB</button>
+                        <button type="button" class="outflow-category-chip" data-category="SYP" onclick="setOutflowMedicineCategory('SYP', this)">SYP</button>
+                        <button type="button" class="outflow-category-chip" data-category="CAP" onclick="setOutflowMedicineCategory('CAP', this)">CAP</button>
+                        <button type="button" class="outflow-category-chip" data-category="INJ" onclick="setOutflowMedicineCategory('INJ', this)">INJ</button>
+                        <button type="button" class="outflow-category-chip" data-category="OTHER" onclick="setOutflowMedicineCategory('OTHER', this)">OTHER</button>
+                    </div>
+                    <div id="outflowMedicineResults" class="medicine-search-results outflow-medicine-results" hidden></div>
+                    <select id="outflowMedicine" class="search-only-select" aria-hidden="true" tabindex="-1"></select>
+                </div>
+                <label>Quantity<input id="outflowQuantity" type="number" min="1" step="1" placeholder="Enter quantity"></label>
+                <label>Date<input id="outflowDate" type="date"></label>
+                <label>Price<input id="outflowPrice" type="number" min="0" step="0.01" placeholder="Enter price"></label>
+                <div class="free-toggle-field"><span>Pricing</span><button type="button" id="outflowFreeButton" class="free-toggle" onclick="toggleOutflowFree()"><span class="free-check">✓</span><span>Free</span></button></div>
+                <div class="outflow-field">
+                    <label>Hospital Type</label>
+                    <select id="outflowHospitalType" onchange="populateOutflowHospitals()"><option value="">Select type</option><option value="RHC">RHC</option><option value="MCH">MCH</option><option value="CD">CD</option></select>
+                </div>
+                <div class="outflow-field">
+                    <label>Hospital</label>
+                    <select id="outflowHospital"><option value="">Select hospital</option></select>
+                </div>
+            </div>
+            <div class="outflow-draft-card">
+                <div class="outflow-draft-head"><strong>Current Outflow</strong><span id="outflowDraftCount">0 items</span></div>
+                <div class="outflow-draft-table-head"><span>Medicine</span><span>Category</span><span>Qty</span><span>Hospital</span><span>Date</span><span>Price</span></div>
+                <div id="outflowDraftList" class="outflow-draft-list"></div>
+            </div>
+            <div class="outflow-modal-actions"><button class="cancel-action-btn" type="button" onclick="closeOutflowModal()">Cancel</button><button class="modal-primary-btn outflow-next-btn" type="button" onclick="addOutflowDraft()"><span>Next</span><svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></svg></button><button class="modal-primary-btn outflow-finish-btn" type="button" onclick="finishOutflow()"><span>Finish</span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></button></div>
+        </div>
+    </div>
+
+    <!-- OUTFLOW INFO -->
+    <div class="modal-backdrop hospital-action-backdrop" id="outflowInfoModal" onclick="closeOutflowInfo(event)"><div class="mini-modal hospital-action-modal outflow-action-modal outflow-group-info-modal" onclick="event.stopPropagation()"><button class="modal-close" type="button" onclick="closeOutflowInfo()">×</button><div class="action-modal-icon info-modal-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 10v6M12 7.2v.1"/></svg></div><span class="modal-kicker">OUTFLOW INFORMATION</span><h2>Distribution Details</h2><p>Complete information about the medicines supplied in this hospital distribution.</p><div class="outflow-group-summary"><div><span>Hospital</span><strong id="infoOutflowHospital">—</strong></div><div><span>Hospital Type</span><strong id="infoOutflowHospitalType">—</strong></div><div><span>Date</span><strong id="infoOutflowDate">—</strong></div><div><span>Total Medicines</span><strong id="infoOutflowMedicineCount">—</strong></div><div><span>Total Units</span><strong id="infoOutflowQuantity">—</strong></div><div><span>Total Value</span><strong id="infoOutflowPrice">—</strong></div></div><div class="outflow-info-list-head"><strong>Supplied Medicines</strong><span>Complete item details</span></div><div id="infoOutflowMedicineList" class="outflow-info-medicine-list"></div><div class="outflow-info-actions"><button type="button" class="cancel-action-btn" onclick="closeOutflowInfo()">Close</button><button type="button" class="modal-primary-btn word-download-btn" onclick="downloadInfoOutflowReport()"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg><span>Download Word Report</span></button></div></div></div>
+
+    <!-- MONTHLY RECORD INFORMATION -->
+    <div class="modal-backdrop hospital-action-backdrop" id="monthlyRecordInfoModal" onclick="closeMonthlyRecordInfo(event)">
+        <div class="mini-modal hospital-action-modal monthly-record-info-modal" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeMonthlyRecordInfo()">×</button>
+            <div class="action-modal-icon info-modal-icon monthly-info-main-icon"><svg viewBox="0 0 24 24"><path d="M6 4h12v16H6zM9 8h6M9 12h6M9 16h4"/></svg></div>
+            <span class="modal-kicker">MONTHLY SUPPLY INFORMATION</span>
+            <h2>Complete Medicine Supply Details</h2>
+            <p>Complete information about the medicine supplied in this monthly record.</p>
+            <div class="monthly-info-section-title"><span>Medicine Information</span></div>
+            <div class="monthly-info-grid">
+                <div><span>Medicine Name</span><strong id="monthlyInfoMedicine">—</strong></div>
+                <div><span>Category</span><strong id="monthlyInfoCategory">—</strong></div>
+                <div><span>Expiry Date</span><strong id="monthlyInfoExpiry">—</strong></div>
+                <div><span>Current Stock</span><strong id="monthlyInfoStock">—</strong></div>
+            </div>
+            <div class="monthly-info-section-title"><span>Supply / Distribution Information</span></div>
+            <div class="monthly-info-grid">
+                <div><span>Quantity Supplied</span><strong id="monthlyInfoQuantity">—</strong></div>
+                <div><span>Date Supplied</span><strong id="monthlyInfoDate">—</strong></div>
+                <div><span>Hospital Name</span><strong id="monthlyInfoHospital">—</strong></div>
+                <div><span>Hospital Type</span><strong id="monthlyInfoHospitalType">—</strong></div>
+                <div><span>Pricing</span><strong id="monthlyInfoPricing">—</strong></div>
+                <div><span>Unit Price</span><strong id="monthlyInfoUnitPrice">—</strong></div>
+                <div class="monthly-info-total"><span>Total Value</span><strong id="monthlyInfoTotal">—</strong></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- OUTFLOW DELETE -->
+    <div class="modal-backdrop hospital-action-backdrop" id="deleteOutflowModal" onclick="closeOutflowDelete(event)"><div class="mini-modal hospital-action-modal delete-confirm-modal outflow-action-modal" onclick="event.stopPropagation()"><button class="modal-close" type="button" onclick="closeOutflowDelete()">×</button><div class="action-modal-icon delete-modal-icon"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12M10 11v5M14 11v5"/></svg></div><span class="modal-kicker delete-kicker">DELETE OUTFLOW</span><h2>Delete this record?</h2><p>Deleting <strong id="deleteOutflowName">—</strong> will return its quantity to medicine stock.</p><div class="delete-confirm-actions"><button class="cancel-action-btn" type="button" onclick="closeOutflowDelete()">Cancel</button><button class="confirm-delete-btn" type="button" onclick="confirmOutflowDelete()"><svg viewBox="0 0 24 24"><path d="M6 8h12M9 8V5h6v3M8 8l1 12h6l1-12"/></svg><span>Delete</span></button></div></div></div>
+
+    <!-- OUTFLOW EDIT -->
+    <div class="modal-backdrop" id="editOutflowModal" onclick="closeEditOutflow(event)"><div class="mini-modal outflow-modal edit-outflow-modal" onclick="event.stopPropagation()"><button class="modal-close" type="button" onclick="closeEditOutflow()">×</button><div class="hospital-modal-icon"><svg viewBox="0 0 24 24"><path d="M4 20h5L20 9l-5-5L4 15v5zM13.5 5.5l5 5"/></svg></div><span class="modal-kicker">EDIT OUTFLOW</span><h2>Edit Distribution</h2><p>Update the selected outflow record.</p><div class="outflow-form-grid"><div class="outflow-field outflow-wide edit-outflow-medicine-field"><label>Medicine</label><div class="medicine-picker"><input id="editOutflowMedicineSearch" type="search" autocomplete="off" placeholder="Search medicine name"><button type="button" onclick="renderEditOutflowMedicineOptions()" aria-label="Search medicine"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6"/><path d="m16 16 5 5"/></svg></button></div><div class="outflow-medicine-category-filter edit-outflow-category-filter" role="group" aria-label="Medicine category filter">
+                        <button type="button" class="outflow-category-chip active" data-category="ALL" onclick="setEditOutflowMedicineCategory('ALL', this)">All</button>
+                        <button type="button" class="outflow-category-chip" data-category="TAB" onclick="setEditOutflowMedicineCategory('TAB', this)">TAB</button>
+                        <button type="button" class="outflow-category-chip" data-category="SYP" onclick="setEditOutflowMedicineCategory('SYP', this)">SYP</button>
+                        <button type="button" class="outflow-category-chip" data-category="CAP" onclick="setEditOutflowMedicineCategory('CAP', this)">CAP</button>
+                        <button type="button" class="outflow-category-chip" data-category="INJ" onclick="setEditOutflowMedicineCategory('INJ', this)">INJ</button>
+                        <button type="button" class="outflow-category-chip" data-category="OTHER" onclick="setEditOutflowMedicineCategory('OTHER', this)">OTHER</button>
+                    </div><div id="editOutflowMedicineResults" class="medicine-search-results outflow-medicine-results" hidden></div><select id="editOutflowMedicine" class="search-only-select" aria-hidden="true" tabindex="-1"></select></div><label>Quantity<input id="editOutflowQuantity" type="number" min="1"></label><label>Date<input id="editOutflowDate" type="date"></label><label>Price<input id="editOutflowPrice" type="number" min="0" step="0.01"></label><div class="free-toggle-field"><span>Pricing</span><button type="button" id="editOutflowFreeButton" class="free-toggle" onclick="toggleEditOutflowFree()"><span class="free-check">✓</span><span>Free</span></button></div><label>Hospital Type<select id="editOutflowHospitalType" onchange="populateEditOutflowHospitals()"><option value="">Select type</option><option value="RHC">RHC</option><option value="MCH">MCH</option><option value="CD">CD</option></select></label><label>Hospital<select id="editOutflowHospital"></select></label></div><div class="outflow-modal-actions"><button class="cancel-action-btn" type="button" onclick="closeEditOutflow()">Cancel</button><button class="modal-primary-btn" type="button" onclick="saveEditedOutflow()"><span>Save Changes</span><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></svg></button></div></div></div>
+
+    <!-- OUTFLOW WORD REPORT READY -->
+    <div class="modal-backdrop hospital-action-backdrop" id="outflowReportModal" onclick="closeOutflowReportModal(event)">
+        <div class="mini-modal hospital-action-modal outflow-report-ready-modal" onclick="event.stopPropagation()">
+            <button class="modal-close" type="button" onclick="closeOutflowReportModal()">×</button>
+            <div class="action-modal-icon report-ready-icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l3 3v15H6zM14 3v4h4M9 12h6M9 16h6M9 8h2"/></svg></div>
+            <span class="modal-kicker">WORD REPORT READY</span>
+            <h2>Outflow Report Generated</h2>
+            <p>The complete medicine supply report has been prepared in an editable Microsoft Word format.</p>
+            <div class="report-ready-summary">
+                <div><span>Hospital</span><strong id="outflowReportHospital">—</strong></div>
+                <div><span>Hospital Type</span><strong id="outflowReportHospitalType">—</strong></div>
+                <div><span>Date</span><strong id="outflowReportDate">—</strong></div>
+                <div><span>Items</span><strong id="outflowReportItems">—</strong></div>
+            </div>
+            <div class="report-ready-actions">
+                <button type="button" class="cancel-action-btn" onclick="closeOutflowReportModal()">Close</button>
+                <button type="button" class="modal-primary-btn word-download-btn" onclick="downloadLatestOutflowReport()"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg><span>Download Word Report</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION -->
+
+    <div
+        class="notification"
+        id="notification"
+    >
+
+        <div class="notification-icon">
+            ✓
+        </div>
+
+        <div class="notification-content">
+
+            <strong id="notificationTitle">
+                Success
+            </strong>
+
+            <p id="notificationMessage">
+                Operation completed.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <script src="jszip.min.js"></script>
+    <script src="api-config.js"></script>
+    <script src="backend-bridge.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+MEDICAL STORE MANAGEMENT — SHARED WEB + ANDROID SETUP
+
+WHAT THIS PACKAGE DOES
+- Provides the web frontend and Node/Express backend.
+- Backend data is saved in medical-store-data.json on its data directory.
+- The Android WebView frontend can be pointed at the same HTTPS backend.
+
+IMPORTANT LIMITATION
+This ZIP is not already hosted on the internet and does not include a compiled APK. A hosting account and a public HTTPS backend URL are required before all phones/PCs can share data. Do not store real sensitive data until proper authentication/permissions and backups are configured. This starter currently uses a shared state API and is not production-secure for public exposure.
+
+LOCAL WEB TEST
+1. Install Node.js LTS from https://nodejs.org
+2. Open this folder in File Explorer, type cmd in the address bar.
+3. Run: npm install
+4. Run: npm start
+5. Open http://localhost:3000
+
+HOSTING
+Deploy this Node project to a host that supports Node.js AND persistent disk storage (for example, a service with a mounted persistent volume). Set: PORT (provided by host), MEDICAL_STORE_HOST=0.0.0.0, MEDICAL_STORE_DATA_DIR to a path on the persistent disk, and CORS_ORIGIN to your website origin. Use HTTPS. A temporary filesystem may lose data on redeploy, so a persistent disk is essential.
+
+ANDROID APK CONNECTION
+1. After deploying, copy the public HTTPS backend URL.
+2. Open MedicalStoreAndroid/app/src/main/assets/api-config.js
+3. Replace https://REPLACE-WITH-YOUR-BACKEND.onrender.com with your actual backend URL. Do not add a trailing slash.
+4. Open the MedicalStoreAndroid folder in Android Studio and wait for Gradle Sync.
+5. Build > Build Bundle(s) / APK(s) > Build APK(s).
+6. Find app/build/outputs/apk/debug/app-debug.apk.
+
+SHARED DATA
+The website served from the backend uses relative /api routes. The Android app uses api-config.js to contact the same deployed backend. They will share data only after both point to the same live backend. The app must have internet access.
+
+DATA AND SECURITY NOTES
+This is a starter integration. Its API currently shares a single state across clients and does not implement server-side user authorization. Anyone who can reach the public API may be able to read/modify records. Before public deployment, add authenticated API sessions, role-based permissions, validation, rate limiting, encrypted backups, and preferably a managed database with transaction support. Never expose this starter publicly with real sensitive data as-is.

@@ -1,0 +1,61 @@
+{
+  "name": "district-quetta-medical-store-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop edition of District Quetta Medical Store Management (no native database build required)",
+  "main": "desktop-main.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "desktop": "electron .",
+    "dist:win": "electron-builder --win nsis"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "electron": "^35.1.5",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "pk.districtquetta.medicalstore",
+    "productName": "Medical Store Management",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "desktop-main.js",
+      "server.js",
+      "backend-bridge.js",
+      "index.html",
+      "script.js",
+      "style.css",
+      "dashboard-bg.svg",
+      "jszip.min.js",
+      "package.json",
+      "node_modules/**/*"
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Medical-Store-Management-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Medical Store Management"
+    }
+  }
+}
