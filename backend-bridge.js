@@ -5,20 +5,12 @@
     window.location.origin
   ).replace(/\/+$/, '');
 
+  // Never synchronize passwords or login sessions.
   const DATA_KEYS = new Set([
-    'districtMedicineUsers',
-    'districtLoggedInUser',
     'districtMedicineHospitals',
     'districtMedicineMedicines',
     'districtMedicineOutflows'
   ]);
-
-  const RESET_FLAGS = [
-    'medicalStoreFullDataResetV1',
-    'hospitalDirectoryResetV2',
-    'hospitalDirectoryResetV3',
-    'medicineHospitalReferenceResetV5'
-  ];
 
   const native = {
     getItem: Storage.prototype.getItem,
@@ -26,22 +18,32 @@
     removeItem: Storage.prototype.removeItem
   };
 
-  let writeQueue = Promise.resolve();
   let backendOnline = false;
+  let writeQueue = Promise.resolve();
 
   function apiUrl(path = '') {
     return `${API_BASE}/api/state${path}`;
   }
 
-  function queueWrite(task) {
-    writeQueue = writeQueue.then(task).catch(error => {
-      console.error('Shared database save failed:', error);
-
-      window.dispatchEvent(
-        new CustomEvent('medical-store-backend-error', {
-          detail: error
-        })
+  function saveToServer(key, value) {
+    writeQueue = writeQueue.then(async () => {
+      const response = await fetch(
+        apiUrl(`/${encodeURIComponent(key)}`),
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ value })
+        }
       );
+
+      if (!response.ok) {
+        throw new Error(`Save failed for ${key}: HTTP ${response.status}`);
+      }
+    }).catch(error => {
+      console.error('Shared database save failed:', error);
+      document.documentElement.dataset.backendStatus = 'error';
     });
 
     return writeQueue;
@@ -50,9 +52,7 @@
   async function loadApp() {
     try {
       const response = await fetch(apiUrl(), {
-        headers: {
-          Accept: 'application/json'
-        }
+        headers: { Accept: 'application/json' }
       });
 
       if (!response.ok) {
@@ -67,14 +67,18 @@
           state[key] !== null &&
           state[key] !== undefined
         ) {
-          const value =
-            typeof state[key] === 'string'
-              ? state[key]
-              : JSON.stringify(state[key]);
+          const value = typeof state[key] === 'string'
+            ? state[key]
+            : JSON.stringify(state[key]);
 
           native.setItem.call(localStorage, key, value);
         } else {
-          native.removeItem.call(localStorage, key);
+          // Preserve existing local data if the server has no record.
+          const localValue = native.getItem.call(localStorage, key);
+
+          if (localValue !== null) {
+            await saveToServer(key, localValue);
+          }
         }
       }
 
@@ -83,91 +87,47 @@
 
     } catch (error) {
       console.error('Shared database connection failed:', error);
-
       document.documentElement.dataset.backendStatus = 'offline';
     }
-
-    RESET_FLAGS.forEach(key => {
-      native.setItem.call(localStorage, key, '1');
-    });
 
     Storage.prototype.setItem = function(key, value) {
       native.setItem.call(this, key, value);
 
       if (
-        this !== localStorage ||
-        !backendOnline ||
-        !DATA_KEYS.has(String(key))
+        this === localStorage &&
+        backendOnline &&
+        DATA_KEYS.has(String(key))
       ) {
-        return;
+        saveToServer(String(key), String(value));
       }
-
-      const serialized = String(value);
-
-      queueWrite(async () => {
-        const response = await fetch(
-          apiUrl(`/${encodeURIComponent(key)}`),
-          {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-              value: serialized
-            })
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            `Save failed for ${key}: HTTP ${response.status}`
-          );
-        }
-      });
     };
 
     Storage.prototype.removeItem = function(key) {
       native.removeItem.call(this, key);
 
       if (
-        this !== localStorage ||
-        !backendOnline ||
-        !DATA_KEYS.has(String(key))
+        this === localStorage &&
+        backendOnline &&
+        DATA_KEYS.has(String(key))
       ) {
-        return;
-      }
-
-      queueWrite(async () => {
-        const response = await fetch(
-          apiUrl(`/${encodeURIComponent(key)}`),
-          {
-            method: 'DELETE'
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error(
-            `Delete failed for ${key}: HTTP ${response.status}`
+        writeQueue = writeQueue.then(async () => {
+          const response = await fetch(
+            apiUrl(`/${encodeURIComponent(key)}`),
+            { method: 'DELETE' }
           );
-        }
-      });
+
+          if (!response.ok) {
+            throw new Error(`Delete failed: HTTP ${response.status}`);
+          }
+        }).catch(error => {
+          console.error('Shared database delete failed:', error);
+        });
+      }
     };
 
     const app = document.createElement('script');
     app.src = 'script.js';
-
-    app.onload = () => {
-      if (!backendOnline) {
-        console.warn(
-          'Shared database unavailable. Changes may remain local.'
-        );
-      }
-    };
-
-    app.onerror = () => {
-      console.error('Could not load script.js');
-    };
-
+    app.onerror = () => console.error('Could not load script.js');
     document.body.appendChild(app);
   }
 
