@@ -33,7 +33,7 @@ module.exports = async (req, res) => {
 
       const state = {};
       for (const row of data) {
-        if (ALLOWED_KEYS.has(row.key)) state[row.key] = row.value;
+        if (ALLOWED_KEYS.has(row.key)) state[row.key] = JSON.stringify(row.value);
       }
 
       return res.status(200).json(state);
