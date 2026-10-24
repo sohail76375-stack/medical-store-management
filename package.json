@@ -2,15 +2,17 @@
   "name": "district-quetta-medical-store-desktop",
   "version": "1.0.0",
   "private": true,
-  "description": "Desktop edition of District Quetta Medical Store Management (no native database build required)",
+  "description": "Desktop edition of District Quetta Medical Store Management",
   "main": "desktop-main.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
     "desktop": "electron .",
+    "postinstall": "electron-builder install-app-deps",
     "dist:win": "electron-builder --win nsis"
   },
   "dependencies": {
+    "better-sqlite3": "^11.8.1",
     "express": "^4.21.2"
   },
   "devDependencies": {
@@ -25,17 +27,18 @@
       "output": "dist"
     },
     "files": [
-      "desktop-main.js",
-      "server.js",
-      "backend-bridge.js",
-      "index.html",
-      "script.js",
-      "style.css",
-      "dashboard-bg.svg",
-      "jszip.min.js",
-      "package.json",
-      "node_modules/**/*"
-    ],
+  "desktop-main.js",
+  "server.js",
+  "backend-bridge.js",
+  "api-config.js",
+  "index.html",
+  "script.js",
+  "style.css",
+  "dashboard-bg.svg",
+  "jszip.min.js",
+  "package.json",
+  "node_modules/**/*"
+],
     "asarUnpack": [
       "node_modules/better-sqlite3/**"
     ],

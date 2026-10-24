@@ -18,6 +18,3 @@ NOTES
 - The first build requires internet access.
 - The backend listens only on the local computer when launched as a desktop app and chooses an available local port.
 - The existing backend is an initial integration, not production-grade security. Do not use real sensitive accounts until server-side authentication, password hashing, authorization, and backups are implemented.
-
-
-INSTALLATION NOTE (updated): This edition uses a persistent JSON data file instead of better-sqlite3, so Windows does not need Python, node-gyp, or Visual C++ Build Tools. Saved data is stored in the application user-data folder when running as a desktop app.

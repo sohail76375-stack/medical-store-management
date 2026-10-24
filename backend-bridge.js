@@ -22,10 +22,6 @@
   };
   let writeQueue = Promise.resolve();
   let backendOnline = false;
-  const configuredBase = String(window.MEDICAL_STORE_API_BASE || '').trim();
-  const API_BASE = configuredBase && !configuredBase.includes('REPLACE-WITH-YOUR-BACKEND')
-    ? configuredBase.replace(/\/$/, '') : '';
-  const apiUrl = path => `${API_BASE}${path}`;
 
   function queueWrite(task) {
     writeQueue = writeQueue.then(task).catch(error => {
@@ -37,7 +33,7 @@
 
   async function loadApp() {
     try {
-      const response = await fetch(apiUrl('/api/state'), { headers: { 'Accept': 'application/json' } });
+      const response = await fetch('/api/state', { headers: { 'Accept': 'application/json' } });
       if (!response.ok) throw new Error(`Backend returned ${response.status}`);
       const state = await response.json();
       for (const key of DATA_KEYS) {
@@ -59,7 +55,7 @@
       if (this === localStorage && backendOnline && DATA_KEYS.has(String(key))) {
         const serialized = String(value);
         queueWrite(async () => {
-          const response = await fetch(apiUrl(`/api/state/${encodeURIComponent(key)}`), {
+          const response = await fetch(`/api/state/${encodeURIComponent(key)}`, {
             method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ value: serialized })
           });
           if (!response.ok) throw new Error(`Save failed for ${key} (${response.status})`);
@@ -70,7 +66,7 @@
       native.removeItem.call(this, key);
       if (this === localStorage && backendOnline && DATA_KEYS.has(String(key))) {
         queueWrite(async () => {
-          const response = await fetch(apiUrl(`/api/state/${encodeURIComponent(key)}`), { method: 'DELETE' });
+          const response = await fetch(`/api/state/${encodeURIComponent(key)}`, { method: 'DELETE' });
           if (!response.ok) throw new Error(`Delete failed for ${key} (${response.status})`);
         });
       }

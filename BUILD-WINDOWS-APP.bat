@@ -16,7 +16,7 @@ echo Installing required packages. Internet is required for the first build...
 call npm install
 if errorlevel 1 (
   echo.
-  echo Dependency installation failed. Check your internet connection, then run this script again.
+  echo Dependency installation failed. Check your internet connection and try again.
   pause
   exit /b 1
 )

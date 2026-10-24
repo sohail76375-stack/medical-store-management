@@ -1,21 +1,10 @@
-/* ==========================================
-   ONE-TIME CLEAN START: CLEAR PROJECT DATA
-   Keeps application code and theme preference unchanged.
-========================================== */
-(function clearExistingProjectDataOnce() {
+;/* SAFE INITIALIZATION: preserve existing project data */
+{
     const resetKey = "medicalStoreFullDataResetV1";
-    if (localStorage.getItem(resetKey) === "1") return;
-
-    [
-        "districtMedicineUsers",
-        "districtLoggedInUser",
-        "districtMedicineHospitals",
-        "districtMedicineMedicines",
-        "districtMedicineOutflows"
-    ].forEach(key => localStorage.removeItem(key));
-
     localStorage.setItem(resetKey, "1");
-})();
+}
+
+
 
 /* ==========================================
    AUTH ELEMENTS
@@ -1099,16 +1088,10 @@ function saveHospitals(hospitals) {
     localStorage.setItem("districtMedicineHospitals", JSON.stringify(hospitals));
 }
 
-// One-time cleanup requested for the current demo: remove hospitals created by the previous version.
-if (!localStorage.getItem("hospitalDirectoryResetV2")) {
-    saveHospitals([]);
-    localStorage.setItem("hospitalDirectoryResetV2", "1");
-}
+/* Preserve existing hospital records. Never clear hospitals automatically. */
+localStorage.setItem("hospitalDirectoryResetV2", "1");
+localStorage.setItem("hospitalDirectoryResetV3", "1");
 
-if (!localStorage.getItem("hospitalDirectoryResetV3")) {
-    saveHospitals([]);
-    localStorage.setItem("hospitalDirectoryResetV3", "1");
-}
 
 function openHospitalModal() {
     const form = document.getElementById("addHospitalForm");
@@ -1274,13 +1257,9 @@ const INITIAL_MEDICINES_FROM_REFERENCE = [
 /* Clean reference release: remove every previously stored hospital, medicine and
    outflow record, then seed ONLY the medicine names/categories from the supplied
    reference image. Prices, expiry dates and stock are intentionally blank/zero. */
-if (!localStorage.getItem("medicineHospitalReferenceResetV5")) {
-    saveHospitals([]);
-    localStorage.removeItem("districtMedicineMedicines");
-    localStorage.removeItem("districtMedicineOutflows");
-    saveMedicines(INITIAL_MEDICINES_FROM_REFERENCE.map(([name,type]) => ({ name, type, stock: 0, expiry: "", price: "" })));
-    localStorage.setItem("medicineHospitalReferenceResetV5", "1");
-}
+/* Preserve existing hospitals, medicines, and outflows. Never reset data automatically. */
+localStorage.setItem("medicineHospitalReferenceResetV5", "1");
+
 
 let activeMedicineFilter = "ALL";
 let activeMedicineMonth = "ALL";
