@@ -12,10 +12,11 @@
     "dist:win": "electron-builder --win nsis"
   },
 "dependencies": {
-  "@supabase/supabase-js": "^2.57.0",
-  "better-sqlite3": "^11.8.1",
-  "express": "^4.21.2"
-}
+"@supabase/supabase-js": "^2.57.0",
+"better-sqlite3": "^11.8.1",
+"express": "^4.21.2"
+},
+
   "devDependencies": {
     "electron": "^35.1.5",
     "electron-builder": "^26.0.12"
