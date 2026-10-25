@@ -1,4 +1,3 @@
-```javascript
 /* Shared backend bridge for website and PC app */
 (() => {
   const API_BASE = (
@@ -149,4 +148,3 @@
 
   start();
 })();
-```
