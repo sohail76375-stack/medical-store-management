@@ -1,10 +1,6 @@
 /* Shared backend bridge for website and PC app */
 (() => {
-  const API_BASE = (
-    window.MEDICAL_STORE_API_BASE ||
-    window.location.origin
-  ).replace(/\/+$/, "");
-
+  const API_BASE = window.location.origin.replace(/\/+$/, "");
   const DATA_KEYS = [
     "districtMedicineHospitals",
     "districtMedicineMedicines",
