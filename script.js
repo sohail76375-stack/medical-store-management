@@ -357,80 +357,52 @@ registerFormElement.addEventListener(
    LOGIN
 ========================================== */
 
-loginFormElement.addEventListener(
-    "submit",
-    (event) => {
+loginFormElement.addEventListener('submit', async (event) => {
+  event.preventDefault();
 
-        event.preventDefault();
+  const cnic = document.getElementById('loginCnic').value.trim();
+  const password = document.getElementById('loginPassword').value;
 
+  if (!/^\d{13}$/.test(cnic)) {
+    showNotification('Invalid CNIC', 'Enter your complete 13 digit CNIC.');
+    return;
+  }
 
-        const cnic =
-            document.getElementById(
-                "loginCnic"
-            ).value.trim();
+  try {
+    const response = await fetch('/api/state/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({ cnic, password })
+    });
 
-        const password =
-            document.getElementById(
-                "loginPassword"
-            ).value;
+    const result = await response.json();
 
-
-        if (cnic.length !== 13) {
-
-            showNotification(
-                "Invalid CNIC",
-                "Enter your complete 13 digit CNIC."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const user =
-            users.find(
-                account =>
-                    account.cnic === cnic
-            );
-
-
-        if (!user) {
-
-            showNotification(
-                "Account not found",
-                "No account exists with this CNIC."
-            );
-
-            return;
-
-        }
-
-
-        if (user.password !== password) {
-
-            showNotification(
-                "Incorrect password",
-                "The password you entered is incorrect."
-            );
-
-            return;
-
-        }
-
-
-        localStorage.setItem(
-            "districtLoggedInUser",
-            JSON.stringify(user)
-        );
-
-
-        openDashboard(user);
-
+    if (!response.ok || !result.ok || !result.user) {
+      showNotification(
+        'Login failed',
+        result.error || 'Check your CNIC and password.'
+      );
+      return;
     }
-);
+
+    localStorage.setItem(
+      'districtLoggedInUser',
+      JSON.stringify(result.user)
+    );
+
+    openDashboard(result.user);
+  } catch (error) {
+    console.error('Login request failed:', error);
+
+    showNotification(
+      'Connection error',
+      'Could not connect to the login server. Please try again.'
+    );
+  }
+});
 
 
 /* ==========================================
