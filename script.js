@@ -46,34 +46,6 @@ const dashboardPage =
 
 
 /* ==========================================
-   LOCAL ACCOUNT DATABASE
-========================================== */
-
-function getUsers() {
-
-    const users =
-        localStorage.getItem(
-            "districtMedicineUsers"
-        );
-
-    return users
-        ? JSON.parse(users)
-        : [];
-
-}
-
-
-function saveUsers(users) {
-
-    localStorage.setItem(
-        "districtMedicineUsers",
-        JSON.stringify(users)
-    );
-
-}
-
-
-/* ==========================================
    FORM SWITCHING
 ========================================== */
 
@@ -222,216 +194,55 @@ themeBtn.addEventListener(
    REGISTRATION
 ========================================== */
 
-registerFormElement.addEventListener(
-    "submit",
-    (event) => {
-
-        event.preventDefault();
-
-
-        const name =
-            document.getElementById(
-                "registerName"
-            ).value.trim();
-
-        const cnic =
-            document.getElementById(
-                "registerCnic"
-            ).value.trim();
-
-        const password =
-            document.getElementById(
-                "registerPassword"
-            ).value;
-
-        const confirmPassword =
-            document.getElementById(
-                "confirmPassword"
-            ).value;
-
-
-        if (!name || !cnic || !password) {
-
-            showNotification(
-                "Missing information",
-                "Please complete all fields."
-            );
-
-            return;
-
-        }
-
-
-        if (cnic.length !== 13) {
-
-            showNotification(
-                "Invalid CNIC",
-                "CNIC must contain exactly 13 digits."
-            );
-
-            return;
-
-        }
-
-
-        if (password.length < 6) {
-
-            showNotification(
-                "Weak password",
-                "Password must contain at least 6 characters."
-            );
-
-            return;
-
-        }
-
-
-        if (password !== confirmPassword) {
-
-            showNotification(
-                "Password mismatch",
-                "The passwords do not match."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const alreadyExists =
-            users.some(
-                user => user.cnic === cnic
-            );
-
-
-        if (alreadyExists) {
-
-            showNotification(
-                "CNIC already registered",
-                "An account with this CNIC already exists."
-            );
-
-            return;
-
-        }
-
-
-        users.push({
-
-            name: name,
-
-            cnic: cnic,
-
-            password: password
-
-        });
-
-
-        saveUsers(users);
-
-
-        document.getElementById(
-            "registerFormElement"
-        ).reset();
-
-
-        showNotification(
-            "Account created",
-            "Your account has been registered successfully."
-        );
-
-
-        setTimeout(
-            showLogin,
-            1000
-        );
-
+registerFormElement.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const name = document.getElementById("registerName").value.trim();
+    const cnic = document.getElementById("registerCnic").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
+    const inviteCode = document.getElementById("registerInviteCode")?.value || "";
+    if (!name || !cnic || !password || !inviteCode) {
+        showNotification("Missing information", "Please complete all fields."); return;
     }
-);
-
+    if (cnic.length !== 13) { showNotification("Invalid CNIC", "CNIC must contain exactly 13 digits."); return; }
+    if (password.length < 8) { showNotification("Weak password", "Password must contain at least 8 characters."); return; }
+    if (password !== confirmPassword) { showNotification("Password mismatch", "The passwords do not match."); return; }
+    try {
+        const result = await window.medicalStoreApi.request("/api/auth/register", {
+            method: "POST", body: JSON.stringify({ name, cnic, password, inviteCode })
+        });
+        localStorage.setItem("medicalStoreToken", result.token);
+        localStorage.setItem("districtLoggedInUser", JSON.stringify(result.user));
+        await window.medicalStoreApi.hydrate();
+        document.getElementById("registerFormElement").reset();
+        showNotification("Account created", "Your account has been registered securely.");
+        openDashboard(result.user);
+    } catch (error) {
+        showNotification("Registration failed", error.message || "Could not create your account.");
+    }
+});
 
 /* ==========================================
    LOGIN
 ========================================== */
 
-loginFormElement.addEventListener(
-    "submit",
-    (event) => {
-
-        event.preventDefault();
-
-
-        const cnic =
-            document.getElementById(
-                "loginCnic"
-            ).value.trim();
-
-        const password =
-            document.getElementById(
-                "loginPassword"
-            ).value;
-
-
-        if (cnic.length !== 13) {
-
-            showNotification(
-                "Invalid CNIC",
-                "Enter your complete 13 digit CNIC."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const user =
-            users.find(
-                account =>
-                    account.cnic === cnic
-            );
-
-
-        if (!user) {
-
-            showNotification(
-                "Account not found",
-                "No account exists with this CNIC."
-            );
-
-            return;
-
-        }
-
-
-        if (user.password !== password) {
-
-            showNotification(
-                "Incorrect password",
-                "The password you entered is incorrect."
-            );
-
-            return;
-
-        }
-
-
-        localStorage.setItem(
-            "districtLoggedInUser",
-            JSON.stringify(user)
-        );
-
-
-        openDashboard(user);
-
+loginFormElement.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const cnic = document.getElementById("loginCnic").value.trim();
+    const password = document.getElementById("loginPassword").value;
+    if (cnic.length !== 13) { showNotification("Invalid CNIC", "Enter your complete 13 digit CNIC."); return; }
+    try {
+        const result = await window.medicalStoreApi.request("/api/auth/login", {
+            method: "POST", body: JSON.stringify({ cnic, password })
+        });
+        localStorage.setItem("medicalStoreToken", result.token);
+        localStorage.setItem("districtLoggedInUser", JSON.stringify(result.user));
+        await window.medicalStoreApi.hydrate();
+        openDashboard(result.user);
+    } catch (error) {
+        showNotification("Login failed", error.message || "Could not sign in. Check your connection and credentials.");
     }
-);
-
+});
 
 /* ==========================================
    FORGOT PASSWORD - CNIC CHECK
@@ -440,170 +251,21 @@ loginFormElement.addEventListener(
 let recoveryCnic = "";
 
 
-forgotFormElement.addEventListener(
-    "submit",
-    (event) => {
-
-        event.preventDefault();
-
-
-        const cnic =
-            document.getElementById(
-                "forgotCnic"
-            ).value.trim();
-
-
-        if (cnic.length !== 13) {
-
-            showNotification(
-                "Invalid CNIC",
-                "Enter your complete 13 digit CNIC."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const user =
-            users.find(
-                account =>
-                    account.cnic === cnic
-            );
-
-
-        if (!user) {
-
-            showNotification(
-                "CNIC not found",
-                "No registered account was found with this CNIC."
-            );
-
-            return;
-
-        }
-
-
-        recoveryCnic = cnic;
-
-
-        document.getElementById(
-            "verifiedUserName"
-        ).textContent =
-            user.name;
-
-
-        hideAllForms();
-
-        changePasswordForm.classList.add(
-            "active"
-        );
-
-    }
-);
-
-
-/* ==========================================
-   CHANGE PASSWORD
-========================================== */
-
-changePasswordFormElement.addEventListener(
-    "submit",
-    (event) => {
-
-        event.preventDefault();
-
-
-        const newPassword =
-            document.getElementById(
-                "newPassword"
-            ).value;
-
-        const confirmNewPassword =
-            document.getElementById(
-                "confirmNewPassword"
-            ).value;
-
-
-        if (newPassword.length < 6) {
-
-            showNotification(
-                "Weak password",
-                "Password must contain at least 6 characters."
-            );
-
-            return;
-
-        }
-
-
-        if (
-            newPassword !==
-            confirmNewPassword
-        ) {
-
-            showNotification(
-                "Password mismatch",
-                "The passwords do not match."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const userIndex =
-            users.findIndex(
-                user =>
-                    user.cnic === recoveryCnic
-            );
-
-
-        if (userIndex === -1) {
-
-            showNotification(
-                "Error",
-                "Account could not be found."
-            );
-
-            return;
-
-        }
-
-
-        users[userIndex].password =
-            newPassword;
-
-
-        saveUsers(users);
-
-
-        recoveryCnic = "";
-
-
-        changePasswordFormElement.reset();
-
-
-        showNotification(
-            "Password changed",
-            "Your password has been updated successfully."
-        );
-
-
-        setTimeout(
-            showLogin,
-            1200
-        );
-
-    }
-);
-
+forgotFormElement.addEventListener("submit", (event) => {
+    event.preventDefault();
+    showNotification(
+        "Administrator approval required",
+        "For account security, CNIC-only password resets are disabled. Please contact your system administrator for an approved reset."
+    );
+});
+
+changePasswordFormElement.addEventListener("submit", (event) => {
+    event.preventDefault();
+    showNotification(
+        "Administrator approval required",
+        "This legacy reset form cannot change server passwords. Please use the signed-in profile password-change option or contact your administrator."
+    );
+});
 
 /* ==========================================
    DASHBOARD OPEN
@@ -1039,41 +701,33 @@ function hideProfilePassword() {
     document.getElementById("profilePasswordPanel").classList.remove("open");
 }
 
-function changePasswordFromProfile() {
+async function changePasswordFromProfile() {
     const user = getCurrentDashboardUser();
     if (!user) return;
     const current = document.getElementById("profileCurrentPassword").value;
     const next = document.getElementById("profileNewPassword").value;
     const confirm = document.getElementById("profileConfirmPassword").value;
-
-    if (current !== user.password) {
-        showNotification("Incorrect password", "Your current password is not correct.");
-        return;
-    }
-    if (next.length < 6) {
-        showNotification("Weak password", "New password must contain at least 6 characters.");
+    if (next.length < 8) {
+        showNotification("Weak password", "New password must contain at least 8 characters.");
         return;
     }
     if (next !== confirm) {
         showNotification("Password mismatch", "The new passwords do not match.");
         return;
     }
-
-    const users = getUsers();
-    const index = users.findIndex(item => item.cnic === user.cnic);
-    if (index === -1) {
-        showNotification("Account error", "Your account could not be found.");
-        return;
+    try {
+        const result = await window.medicalStoreApi.request("/api/auth/change-password", {
+            method: "POST",
+            body: JSON.stringify({ currentPassword: current, newPassword: next })
+        });
+        showNotification("Password updated", result.message || "Your password has been updated.");
+        document.getElementById("profilePasswordPanel").classList.remove("open");
+        document.getElementById("profileCurrentPassword").value = "";
+        document.getElementById("profileNewPassword").value = "";
+        document.getElementById("profileConfirmPassword").value = "";
+    } catch (error) {
+        showNotification("Password update failed", error.message || "Could not update password.");
     }
-    users[index].password = next;
-    saveUsers(users);
-    const updatedUser = { ...user, password: next };
-    localStorage.setItem("districtLoggedInUser", JSON.stringify(updatedUser));
-    document.getElementById("profilePasswordPanel").classList.remove("open");
-    document.getElementById("profileCurrentPassword").value = "";
-    document.getElementById("profileNewPassword").value = "";
-    document.getElementById("profileConfirmPassword").value = "";
-    showNotification("Password updated", "Your password has been changed successfully.");
 }
 
 function getHospitals() {
