@@ -222,136 +222,67 @@ themeBtn.addEventListener(
    REGISTRATION
 ========================================== */
 
-registerFormElement.addEventListener(
-    "submit",
-    (event) => {
+registerFormElement.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        event.preventDefault();
+    const name = document.getElementById("registerName").value.trim();
+    const cnic = document.getElementById("registerCnic").value.trim();
+    const password = document.getElementById("registerPassword").value;
+    const confirmPassword = document.getElementById("confirmPassword").value;
 
+    if (!name || !cnic || !password) {
+        showNotification("Missing information", "Please complete all fields.");
+        return;
+    }
 
-        const name =
-            document.getElementById(
-                "registerName"
-            ).value.trim();
+    if (!/^\d{13}$/.test(cnic)) {
+        showNotification("Invalid CNIC", "CNIC must contain exactly 13 digits.");
+        return;
+    }
 
-        const cnic =
-            document.getElementById(
-                "registerCnic"
-            ).value.trim();
+    if (password.length < 6) {
+        showNotification("Weak password", "Password must contain at least 6 characters.");
+        return;
+    }
 
-        const password =
-            document.getElementById(
-                "registerPassword"
-            ).value;
+    if (password !== confirmPassword) {
+        showNotification("Password mismatch", "The passwords do not match.");
+        return;
+    }
 
-        const confirmPassword =
-            document.getElementById(
-                "confirmPassword"
-            ).value;
-
-
-        if (!name || !cnic || !password) {
-
-            showNotification(
-                "Missing information",
-                "Please complete all fields."
-            );
-
-            return;
-
-        }
-
-
-        if (cnic.length !== 13) {
-
-            showNotification(
-                "Invalid CNIC",
-                "CNIC must contain exactly 13 digits."
-            );
-
-            return;
-
-        }
-
-
-        if (password.length < 6) {
-
-            showNotification(
-                "Weak password",
-                "Password must contain at least 6 characters."
-            );
-
-            return;
-
-        }
-
-
-        if (password !== confirmPassword) {
-
-            showNotification(
-                "Password mismatch",
-                "The passwords do not match."
-            );
-
-            return;
-
-        }
-
-
-        const users = getUsers();
-
-
-        const alreadyExists =
-            users.some(
-                user => user.cnic === cnic
-            );
-
-
-        if (alreadyExists) {
-
-            showNotification(
-                "CNIC already registered",
-                "An account with this CNIC already exists."
-            );
-
-            return;
-
-        }
-
-
-        users.push({
-
-            name: name,
-
-            cnic: cnic,
-
-            password: password
-
+    try {
+        const response = await fetch("/api/state?key=register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, cnic, password })
         });
 
+        const result = await response.json();
 
-        saveUsers(users);
+        if (!response.ok) {
+            showNotification(
+                "Registration failed",
+                result.error || "Could not create your account."
+            );
+            return;
+        }
 
-
-        document.getElementById(
-            "registerFormElement"
-        ).reset();
-
+        document.getElementById("registerFormElement").reset();
 
         showNotification(
             "Account created",
             "Your account has been registered successfully."
         );
 
-
-        setTimeout(
-            showLogin,
-            1000
+        setTimeout(showLogin, 1000);
+    } catch (error) {
+        console.error("Registration error:", error);
+        showNotification(
+            "Connection error",
+            "Could not connect to the server. Please try again."
         );
-
     }
-);
-
+});
 
 /* ==========================================
    LOGIN
