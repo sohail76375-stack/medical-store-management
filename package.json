@@ -1,18 +1,16 @@
-```json
 {
-  "name": "district-quetta-medical-store-web",
-  "version": "1.0.2",
-  "private": true,
-  "description": "District Quetta Medical Store website with Supabase PostgreSQL shared backend, deployed on Vercel",
-  "scripts": {
-    "start": "node server.js",
-    "dev": "node server.js",
-    "check": "node --check server.js && node --check 'api/[...route].js' && node --check backend-bridge.js && node --check script.js"
-  },
-  "dependencies": {
-    "@supabase/supabase-js": "^2.89.0",
-    "express": "^4.21.2",
-    "pg": "^8.13.1"
-  }
+"name": "district-quetta-medical-store-web",
+"version": "1.0.2",
+"private": true,
+"description": "District Quetta Medical Store website with Supabase PostgreSQL shared backend, deployed on Vercel",
+"scripts": {
+"start": "node server.js",
+"dev": "node server.js",
+"check": "node --check server.js && node --check 'api/[...route].js' && node --check backend-bridge.js && node --check script.js"
+},
+"dependencies": {
+"@supabase/supabase-js": "^2.89.0",
+"express": "^4.21.2",
+"pg": "^8.13.1"
 }
-```
+}
