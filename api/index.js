@@ -67,7 +67,66 @@ module.exports = async (req, res) => {
 
     const supabase = createClient(url, serviceKey);
     const key = req.query.key;
+    // Register a new account in Supabase.
+    if (req.method === 'POST' && key === 'register') {
+      const name = String(req.body?.name || '').trim();
+      const cnic = String(req.body?.cnic || '').trim();
+      const password = req.body?.password;
 
+      if (
+        !name ||
+        !/^\d{13}$/.test(cnic) ||
+        typeof password !== 'string' ||
+        password.length < 6
+      ) {
+        return res.status(400).json({
+          error: 'Enter a name, valid 13-digit CNIC, and password of at least 6 characters.'
+        });
+      }
+
+      const { data: existing, error: checkError } = await supabase
+        .from('app_users')
+        .select('id')
+        .eq('cnic', cnic)
+        .limit(1);
+
+      if (checkError) throw checkError;
+
+      if (existing && existing.length) {
+        return res.status(409).json({
+          error: 'This CNIC is already registered.'
+        });
+      }
+
+      const passwordHash = await hashPassword(password);
+
+      const { data: created, error: createError } = await supabase
+        .from('app_users')
+        .insert({
+          name,
+          cnic,
+          password_hash: passwordHash
+        })
+        .select('id,name,cnic')
+        .single();
+
+      if (createError) {
+        if (createError.code === '23505') {
+          return res.status(409).json({
+            error: 'This CNIC is already registered.'
+          });
+        }
+        throw createError;
+      }
+
+      return res.status(201).json({
+        ok: true,
+        user: {
+          name: created.name,
+          cnic: String(created.cnic).trim()
+        }
+      });
+    }
     // Secure server-side login; never return the user list.
     if (req.method === 'POST' && key === 'login') {
       const cnic = String(req.body?.cnic || '').trim();
