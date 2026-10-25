@@ -56,3 +56,16 @@ Free hosting/database plans can sleep, impose storage/connection limits, or chan
 
 ## Verification status
 The source files pass Node.js syntax checks. A live database integration test cannot be completed until you configure a real PostgreSQL instance and hosting environment variables. Do not treat the deployment as verified until the health, registration, login, authorization, and persistence checks above pass.
+
+
+VERCEL DEPLOYMENT (this edition is adapted for Vercel, not Render)
+1. Upload/commit all files from this folder to the ROOT of the GitHub repository connected to Vercel. Merge/replace matching website files; do not put this folder one level deeper.
+2. In Vercel > Project > Settings > Environment Variables, add these for Production (and Preview if you test previews):
+   DATABASE_URL = Supabase PostgreSQL connection string (use Supabase Connect > Transaction pooler/Session pooler as appropriate; copy the full URI).
+   JWT_SECRET = a new random secret of at least 32 characters.
+   REGISTRATION_INVITE_CODE = a private invite code that users must know to register.
+3. Redeploy the latest commit after adding/updating variables.
+4. Test https://YOUR-VERCEL-DOMAIN/api/health. Expected JSON includes {"ok":true,"database":"connected"}.
+5. Do not share DATABASE_URL, JWT_SECRET, or invite code publicly. Never put them in frontend JS.
+
+IMPORTANT: The existing database tables are expected to be public.app_users and public.app_state, created by SUPABASE-SETUP.sql. This build uses the PostgreSQL connection string; it does not use the old medical_store_state Supabase REST table. Existing browser-local accounts/data are not automatically migrated.

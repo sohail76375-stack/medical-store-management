@@ -193,13 +193,17 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: 'The server could not complete the request.' });
 });
 
-const server = app.listen(PORT, HOST, () => console.log(`Medical Store backend listening on ${HOST}:${PORT}`));
-async function shutdown() {
-  server.close(async () => {
-    await pool.end().catch(() => {});
-    process.exit(0);
-  });
+// Vercel runs this Express application as a serverless function via api/[...route].js.
+// For local testing, run `npm start`; the local listener is isolated from the Vercel handler.
+if (require.main === module) {
+  const server = app.listen(PORT, HOST, () => console.log(`Medical Store backend listening on ${HOST}:${PORT}`));
+  async function shutdown() {
+    server.close(async () => {
+      await pool.end().catch(() => {});
+      process.exit(0);
+    });
+  }
+  process.on('SIGINT', shutdown);
+  process.on('SIGTERM', shutdown);
 }
-process.on('SIGINT', shutdown);
-process.on('SIGTERM', shutdown);
-module.exports = { app, server, pool };
+module.exports = { app, pool };
