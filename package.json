@@ -1,16 +1,66 @@
 {
-"name": "district-quetta-medical-store-web",
-"version": "1.0.2",
-"private": true,
-"description": "District Quetta Medical Store website with Supabase PostgreSQL shared backend, deployed on Vercel",
-"scripts": {
-"start": "node server.js",
-"dev": "node server.js",
-"check": "node --check server.js && node --check 'api/[...route].js' && node --check backend-bridge.js && node --check script.js"
-},
+  "name": "district-quetta-medical-store-desktop",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop edition of District Quetta Medical Store Management",
+  "main": "desktop-main.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "desktop": "electron .",
+    "postinstall": "electron-builder install-app-deps",
+    "dist:win": "electron-builder --win nsis"
+  },
 "dependencies": {
-"@supabase/supabase-js": "^2.89.0",
-"express": "^4.21.2",
-"pg": "^8.13.1"
-}
+"@supabase/supabase-js": "^2.57.0",
+"better-sqlite3": "^11.8.1",
+"express": "^4.21.2"
+},
+
+  "devDependencies": {
+    "electron": "^35.1.5",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "pk.districtquetta.medicalstore",
+    "productName": "Medical Store Management",
+    "asar": true,
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+  "desktop-main.js",
+  "server.js",
+  "backend-bridge.js",
+  "api-config.js",
+  "index.html",
+  "script.js",
+  "style.css",
+  "dashboard-bg.svg",
+  "jszip.min.js",
+  "package.json",
+  "node_modules/**/*"
+],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "Medical-Store-Management-Setup-${version}.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Medical Store Management"
+    }
+  }
 }
