@@ -5397,101 +5397,242 @@ body.light .custom-select-shell>.custom-select-trigger{
 }
 body.light .custom-select-shell>.custom-select-trigger:hover{background:#fff;border-color:#8bb9e8;}
 
-/* =================================
-   DOWNLOAD APPLICATIONS SECTION
-================================= */
+/* ======================================
+   QUETTA MEDICINE STORE DOWNLOAD WIDGET
+====================================== */
 
-.download-section {
-    padding: 80px 20px;
-    background: #071a33;
-    text-align: center;
-    color: white;
+.download-widget {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    z-index: 9999;
 }
 
-.download-heading {
-    max-width: 650px;
-    margin: 0 auto 45px;
-}
+/* MAIN DOWNLOAD BUTTON */
 
-.download-heading span {
-    color: #00c896;
-    font-weight: bold;
-    letter-spacing: 3px;
-    font-size: 13px;
-}
-
-.download-heading h2 {
-    font-size: 32px;
-    margin: 20px 0;
-}
-
-.download-heading p {
-    color: #b8c7d9;
-    line-height: 1.7;
-}
-
-.download-container {
-    display: flex;
+.header-download-btn {
+    display: inline-flex;
+    align-items: center;
     justify-content: center;
-    flex-wrap: wrap;
-    gap: 25px;
+    gap: 9px;
+    padding: 10px 17px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 200, 150, 0.45);
+    background: linear-gradient(135deg, #102b49, #071a33);
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
-.download-card {
-    background: #102b49;
-    border: 1px solid #254663;
-    border-radius: 20px;
-    padding: 35px;
-    width: 300px;
-    transition: 0.3s ease;
-}
-
-.download-card:hover {
-    transform: translateY(-8px);
-    border-color: #00c896;
-}
-
-.download-icon {
-    font-size: 45px;
-    margin-bottom: 15px;
-}
-
-.download-card h3 {
-    font-size: 22px;
-}
-
-.download-card p {
-    color: #b8c7d9;
-    line-height: 1.6;
-}
-
-.download-card span {
-    display: block;
-    color: #00c896;
-    margin: 20px 0;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-.download-button {
-    display: block;
+.download-btn-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 23px;
+    height: 23px;
+    border-radius: 7px;
     background: #00c896;
     color: #071a33;
-    padding: 15px;
-    border-radius: 10px;
+    font-size: 18px;
     font-weight: bold;
+    transition: transform 0.3s ease;
+}
+
+.header-download-btn:hover {
+    transform: translateY(-3px);
+    border-color: #00c896;
+    box-shadow: 0 7px 22px rgba(0, 200, 150, 0.22);
+}
+
+.header-download-btn:hover .download-btn-icon {
+    transform: translateY(3px);
+}
+
+/* DOWNLOAD POPUP */
+
+.download-popup {
+    position: absolute;
+    top: calc(100% + 14px);
+    right: 0;
+    width: 340px;
+    padding: 20px;
+    background: #0b2038;
+    border: 1px solid rgba(0, 200, 150, 0.25);
+    border-radius: 18px;
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(12px) scale(0.97);
+    transform-origin: top right;
+    transition: all 0.28s ease;
+}
+
+.download-popup.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+}
+
+/* POPUP HEADING */
+
+.download-popup-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.download-small-label {
+    color: #00c896;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.download-popup-header h3 {
+    color: white;
+    font-size: 21px;
+    margin: 8px 0;
+}
+
+.download-popup-header p {
+    color: #a9bbce;
+    font-size: 12px;
+    margin: 0;
+}
+
+.download-close {
+    border: none;
+    background: rgba(255, 255, 255, 0.08);
+    color: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    font-size: 22px;
+    cursor: pointer;
+    transition: 0.25s;
+}
+
+.download-close:hover {
+    background: #00c896;
+    color: #071a33;
+    transform: rotate(90deg);
+}
+
+/* DOWNLOAD OPTIONS */
+
+.download-option {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 14px;
+    margin-top: 12px;
+    background: #102b49;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 13px;
     text-decoration: none;
-    transition: 0.3s;
+    transition: all 0.25s ease;
 }
 
-.download-button:hover {
-    background: white;
-    transform: scale(1.03);
+.download-option:hover {
+    transform: translateX(5px);
+    border-color: #00c896;
+    background: #143653;
 }
 
-@media (max-width: 600px) {
-    .download-card {
-        width: 100%;
-        max-width: 320px;
+.download-option-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 23px;
+}
+
+.phone-icon {
+    background: rgba(0, 200, 150, 0.14);
+}
+
+.pc-icon {
+    background: rgba(65, 145, 255, 0.14);
+}
+
+.download-option-info {
+    flex: 1;
+}
+
+.download-option-info h4 {
+    color: white;
+    margin: 0 0 5px;
+    font-size: 14px;
+}
+
+.download-option-info p {
+    color: #a9bbce;
+    font-size: 11px;
+    margin: 0 0 6px;
+}
+
+.download-option-info span {
+    color: #00c896;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.download-arrow {
+    color: #00c896;
+    font-size: 23px;
+    font-weight: bold;
+    transition: transform 0.25s ease;
+}
+
+.download-option:hover .download-arrow {
+    transform: translateY(4px);
+}
+
+/* FOOTER */
+
+.download-popup-footer {
+    text-align: center;
+    color: #8297ad;
+    font-size: 10px;
+    margin-top: 18px;
+}
+
+/* MOBILE RESPONSIVENESS */
+
+@media (max-width: 480px) {
+
+    .download-popup {
+        position: fixed;
+        top: 75px;
+        right: 12px;
+        left: 12px;
+        width: auto;
+        max-width: 380px;
+        margin: auto;
+        transform-origin: top center;
+    }
+
+    .header-download-btn {
+        padding: 9px 11px;
+        font-size: 11px;
+        gap: 6px;
+    }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+    .download-popup,
+    .download-option,
+    .header-download-btn,
+    .download-btn-icon {
+        transition: none;
     }
 }
