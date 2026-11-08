@@ -5660,3 +5660,75 @@ body.light .custom-select-shell>.custom-select-trigger:hover{background:#fff;bor
     .auth-header-actions .download-btn-icon { width: 21px; height: 21px; }
     .dashboard-header .header-actions { flex-wrap: wrap; justify-content: flex-end; }
 }
+/* =====================================
+   DOWNLOAD POPUP LAYOUT CORRECTION
+===================================== */
+
+/* Keep popup in a proper vertical layout */
+.download-popup {
+    display: block !important;
+    position: fixed !important;
+
+    top: 85px !important;
+    right: 24px !important;
+    left: auto !important;
+
+    width: 390px !important;
+    max-width: calc(100vw - 32px) !important;
+
+    box-sizing: border-box !important;
+    padding: 22px !important;
+
+    overflow: visible !important;
+    z-index: 999999 !important;
+}
+
+/* Keep heading on top */
+.download-popup-header {
+    display: flex !important;
+    width: 100% !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    margin-bottom: 20px !important;
+}
+
+/* Stack Android and PC options vertically */
+.download-popup .download-option {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+
+    width: 100% !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+
+    margin: 12px 0 0 !important;
+    padding: 14px !important;
+}
+
+/* Prevent text from overflowing */
+.download-option-info {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+}
+
+.download-option-info h4,
+.download-option-info p {
+    overflow-wrap: break-word !important;
+}
+
+/* Keep icons correctly positioned */
+.download-option-icon {
+    flex: 0 0 46px !important;
+}
+
+/* Mobile positioning */
+@media (max-width: 600px) {
+    .download-popup {
+        top: 75px !important;
+        right: 12px !important;
+        left: 12px !important;
+        width: auto !important;
+        max-width: none !important;
+    }
+}
