@@ -66,7 +66,68 @@ module.exports = async (req, res) => {
     }
 
     const supabase = createClient(url, serviceKey);
-    const key = req.query.key;
+    // Support both Vercel rewrites (/api/state/:key -> ?key=:key) and direct
+    // path routing. This prevents check-account from falling through to the
+    // generic 'Unsupported operation' response when the rewrite query is absent.
+    const requestPath = String(req.url || '').split('?')[0];
+    const statePathMatch = requestPath.match(/\/api\/state\/([^/]+)\/?$/);
+    const key = (req.query && req.query.key) || (statePathMatch ? decodeURIComponent(statePathMatch[1]) : undefined);
+    // Verify that a CNIC is registered before showing the password-change step.
+    // This endpoint returns no personal information and never changes a password.
+    if (req.method === 'POST' && key === 'check-account') {
+      const cnic = String(req.body?.cnic || '').trim();
+      if (!/^\d{13}$/.test(cnic)) {
+        return res.status(400).json({ error: 'Enter a valid 13-digit CNIC.' });
+      }
+      const { data: accounts, error: accountError } = await supabase
+        .from('app_users').select('id').eq('cnic', cnic).limit(1);
+      if (accountError) throw accountError;
+      let found = Boolean(accounts && accounts.length);
+      if (!found) {
+        const { data: legacyRows, error: legacyError } = await supabase
+          .from('medical_store_state').select('state_value').eq('state_key', LEGACY_USERS_KEY).limit(1);
+        if (legacyError) throw legacyError;
+        let users = legacyRows?.length ? parseValue(legacyRows[0].state_value) : [];
+        if (typeof users === 'string') users = parseValue(users);
+        found = Array.isArray(users) && users.some(user => String(user?.cnic || '').trim() === cnic);
+      }
+      if (!found) return res.status(404).json({ error: 'No account was found for this CNIC.' });
+      return res.status(200).json({ ok: true, available: true });
+    }
+    // CNIC-only password reset requested for this privately distributed app.
+    // WARNING: anyone who knows a user's CNIC can take over that account.
+    if (req.method === 'POST' && key === 'reset-password') {
+      const cnic = String(req.body?.cnic || '').trim();
+      const newPassword = req.body?.newPassword;
+      if (!/^\d{13}$/.test(cnic) || typeof newPassword !== 'string' || newPassword.length < 6) {
+        return res.status(400).json({ error: 'Enter a valid 13-digit CNIC and a new password of at least 6 characters.' });
+      }
+      const { data: accounts, error: accountError } = await supabase
+        .from('app_users').select('id').eq('cnic', cnic).limit(1);
+      if (accountError) throw accountError;
+      if (accounts && accounts.length) {
+        const passwordHash = await hashPassword(newPassword);
+        const { error: updateError } = await supabase.from('app_users')
+          .update({ password_hash: passwordHash }).eq('id', accounts[0].id);
+        if (updateError) throw updateError;
+        return res.status(200).json({ ok: true, message: 'Password reset successfully.' });
+      }
+      const { data: legacyRows, error: legacyError } = await supabase
+        .from('medical_store_state').select('state_value').eq('state_key', LEGACY_USERS_KEY).limit(1);
+      if (legacyError) throw legacyError;
+      let users = legacyRows?.length ? parseValue(legacyRows[0].state_value) : [];
+      if (typeof users === 'string') users = parseValue(users);
+      if (!Array.isArray(users)) users = [];
+      const index = users.findIndex(account => String(account.cnic || '').trim() === cnic);
+      if (index < 0) return res.status(404).json({ error: 'No account was found for this CNIC.' });
+      users[index].password = await hashPassword(newPassword);
+      delete users[index].password_hash;
+      const { error: legacyUpdateError } = await supabase.from('medical_store_state')
+        .update({ state_value: users }).eq('state_key', LEGACY_USERS_KEY);
+      if (legacyUpdateError) throw legacyUpdateError;
+      return res.status(200).json({ ok: true, message: 'Password reset successfully.' });
+    }
+
     // Register a new account in Supabase.
     if (req.method === 'POST' && key === 'register') {
       const name = String(req.body?.name || '').trim();
@@ -258,6 +319,54 @@ module.exports = async (req, res) => {
           cnic: String(created.cnic).trim()
         }
       });
+    }
+
+    // Secure password change for an authenticated-by-password account.
+    // The mobile client sends the CNIC and current password; the server verifies it
+    // before replacing the stored password hash. Never allow CNIC-only resets here.
+    if (req.method === 'POST' && key === 'change-password') {
+      const cnic = String(req.body?.cnic || '').trim();
+      const currentPassword = req.body?.currentPassword;
+      const newPassword = req.body?.newPassword;
+      if (!/^\d{13}$/.test(cnic) || typeof currentPassword !== 'string' ||
+          typeof newPassword !== 'string' || newPassword.length < 6) {
+        return res.status(400).json({ error: 'Enter your CNIC, current password, and a new password of at least 6 characters.' });
+      }
+
+      const { data: accounts, error: accountError } = await supabase
+        .from('app_users').select('id,password_hash').eq('cnic', cnic).limit(1);
+      if (accountError) throw accountError;
+      if (accounts && accounts.length) {
+        const account = accounts[0];
+        if (!await verifyPassword(currentPassword, account.password_hash)) {
+          return res.status(401).json({ error: 'Your current password is incorrect.' });
+        }
+        const passwordHash = await hashPassword(newPassword);
+        const { error: updateError } = await supabase.from('app_users')
+          .update({ password_hash: passwordHash }).eq('id', account.id);
+        if (updateError) throw updateError;
+        return res.status(200).json({ ok: true, message: 'Password updated.' });
+      }
+
+      // Support accounts that have not yet been migrated from legacy shared state.
+      const { data: legacyRows, error: legacyError } = await supabase
+        .from('medical_store_state').select('state_value').eq('state_key', LEGACY_USERS_KEY).limit(1);
+      if (legacyError) throw legacyError;
+      let users = legacyRows?.length ? parseValue(legacyRows[0].state_value) : [];
+      if (typeof users === 'string') users = parseValue(users);
+      if (!Array.isArray(users)) users = [];
+      const index = users.findIndex(account => String(account.cnic || '').trim() === cnic);
+      if (index < 0) return res.status(404).json({ error: 'Account not found.' });
+      const stored = users[index].password ?? users[index].password_hash;
+      if (!await verifyPassword(currentPassword, stored)) {
+        return res.status(401).json({ error: 'Your current password is incorrect.' });
+      }
+      users[index].password = await hashPassword(newPassword);
+      delete users[index].password_hash;
+      const { error: legacyUpdateError } = await supabase.from('medical_store_state')
+        .update({ state_value: users }).eq('state_key', LEGACY_USERS_KEY);
+      if (legacyUpdateError) throw legacyUpdateError;
+      return res.status(200).json({ ok: true, message: 'Password updated.' });
     }
 
     // Public state contains operational data only, never user accounts.
