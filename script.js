@@ -2020,53 +2020,52 @@ if (typeof updateDashboardData === "function") updateDashboardData();
 })();
 /* ======================================
    DOWNLOAD BUTTON FUNCTIONALITY
+   Supports the authentication and dashboard headers.
 ====================================== */
-
 (function () {
+    function initializeDownloadWidgets() {
+        document.querySelectorAll(".download-widget").forEach(function (widget) {
+            if (widget.dataset.downloadReady === "true") return;
+            widget.dataset.downloadReady = "true";
 
-    const toggle = document.getElementById("downloadToggle");
-    const popup = document.getElementById("downloadPopup");
-    const close = document.getElementById("downloadClose");
+            const toggle = widget.querySelector(".header-download-btn");
+            const popup = widget.querySelector(".download-popup");
+            const close = widget.querySelector(".download-close");
+            if (!toggle || !popup || !close) return;
 
-    if (!toggle || !popup || !close) return;
+            function closePopup() {
+                popup.classList.remove("active");
+                toggle.setAttribute("aria-expanded", "false");
+            }
 
-    function openDownloadPopup() {
-        popup.classList.add("active");
-        toggle.setAttribute("aria-expanded", "true");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.addEventListener("click", function (event) {
+                event.stopPropagation();
+                const shouldOpen = !popup.classList.contains("active");
+                document.querySelectorAll(".download-popup.active").forEach(function (openPopup) {
+                    openPopup.classList.remove("active");
+                    const owner = openPopup.closest(".download-widget");
+                    owner?.querySelector(".header-download-btn")?.setAttribute("aria-expanded", "false");
+                });
+                if (shouldOpen) {
+                    popup.classList.add("active");
+                    toggle.setAttribute("aria-expanded", "true");
+                }
+            });
+
+            close.addEventListener("click", closePopup);
+            document.addEventListener("click", function (event) {
+                if (!widget.contains(event.target)) closePopup();
+            });
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape") closePopup();
+            });
+        });
     }
 
-    function closeDownloadPopup() {
-        popup.classList.remove("active");
-        toggle.setAttribute("aria-expanded", "false");
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initializeDownloadWidgets, { once: true });
+    } else {
+        initializeDownloadWidgets();
     }
-
-    toggle.setAttribute("aria-expanded", "false");
-
-    toggle.addEventListener("click", function (event) {
-        event.stopPropagation();
-
-        if (popup.classList.contains("active")) {
-            closeDownloadPopup();
-        } else {
-            openDownloadPopup();
-        }
-    });
-
-    close.addEventListener("click", closeDownloadPopup);
-
-    document.addEventListener("click", function (event) {
-        if (
-            !popup.contains(event.target) &&
-            !toggle.contains(event.target)
-        ) {
-            closeDownloadPopup();
-        }
-    });
-
-    document.addEventListener("keydown", function (event) {
-        if (event.key === "Escape") {
-            closeDownloadPopup();
-        }
-    });
-
 })();

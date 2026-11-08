@@ -5636,3 +5636,27 @@ body.light .custom-select-shell>.custom-select-trigger:hover{background:#fff;bor
         transition: none;
     }
 }
+
+
+/* Download controls in both authentication and dashboard headers */
+.auth-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.auth-header-actions .download-widget { z-index: 10020; }
+.dashboard-header .header-actions .download-widget { z-index: 10020; }
+.download-popup { z-index: 10030; }
+.download-popup.active { pointer-events: auto; }
+.download-widget .header-download-btn:focus-visible,
+.download-widget .download-close:focus-visible,
+.download-widget .download-option:focus-visible {
+    outline: 2px solid #52e0b0;
+    outline-offset: 3px;
+}
+@media (max-width: 620px) {
+    .auth-header-actions { gap: 9px; }
+    .auth-header-actions .header-download-btn { padding: 8px 10px; font-size: 11px; }
+    .auth-header-actions .download-btn-icon { width: 21px; height: 21px; }
+    .dashboard-header .header-actions { flex-wrap: wrap; justify-content: flex-end; }
+}
