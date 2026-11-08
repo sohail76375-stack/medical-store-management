@@ -5396,3 +5396,102 @@ body.light .custom-select-shell>.custom-select-trigger{
   border-color:#cbd9e9;box-shadow:0 2px 7px rgba(35,73,113,.035);
 }
 body.light .custom-select-shell>.custom-select-trigger:hover{background:#fff;border-color:#8bb9e8;}
+
+/* =================================
+   DOWNLOAD APPLICATIONS SECTION
+================================= */
+
+.download-section {
+    padding: 80px 20px;
+    background: #071a33;
+    text-align: center;
+    color: white;
+}
+
+.download-heading {
+    max-width: 650px;
+    margin: 0 auto 45px;
+}
+
+.download-heading span {
+    color: #00c896;
+    font-weight: bold;
+    letter-spacing: 3px;
+    font-size: 13px;
+}
+
+.download-heading h2 {
+    font-size: 32px;
+    margin: 20px 0;
+}
+
+.download-heading p {
+    color: #b8c7d9;
+    line-height: 1.7;
+}
+
+.download-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+}
+
+.download-card {
+    background: #102b49;
+    border: 1px solid #254663;
+    border-radius: 20px;
+    padding: 35px;
+    width: 300px;
+    transition: 0.3s ease;
+}
+
+.download-card:hover {
+    transform: translateY(-8px);
+    border-color: #00c896;
+}
+
+.download-icon {
+    font-size: 45px;
+    margin-bottom: 15px;
+}
+
+.download-card h3 {
+    font-size: 22px;
+}
+
+.download-card p {
+    color: #b8c7d9;
+    line-height: 1.6;
+}
+
+.download-card span {
+    display: block;
+    color: #00c896;
+    margin: 20px 0;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.download-button {
+    display: block;
+    background: #00c896;
+    color: #071a33;
+    padding: 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.download-button:hover {
+    background: white;
+    transform: scale(1.03);
+}
+
+@media (max-width: 600px) {
+    .download-card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
