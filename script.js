@@ -2018,3 +2018,55 @@ if (typeof updateDashboardData === "function") updateDashboardData();
     if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", run, {once:true});
     else run();
 })();
+/* ======================================
+   DOWNLOAD BUTTON FUNCTIONALITY
+====================================== */
+
+(function () {
+
+    const toggle = document.getElementById("downloadToggle");
+    const popup = document.getElementById("downloadPopup");
+    const close = document.getElementById("downloadClose");
+
+    if (!toggle || !popup || !close) return;
+
+    function openDownloadPopup() {
+        popup.classList.add("active");
+        toggle.setAttribute("aria-expanded", "true");
+    }
+
+    function closeDownloadPopup() {
+        popup.classList.remove("active");
+        toggle.setAttribute("aria-expanded", "false");
+    }
+
+    toggle.setAttribute("aria-expanded", "false");
+
+    toggle.addEventListener("click", function (event) {
+        event.stopPropagation();
+
+        if (popup.classList.contains("active")) {
+            closeDownloadPopup();
+        } else {
+            openDownloadPopup();
+        }
+    });
+
+    close.addEventListener("click", closeDownloadPopup);
+
+    document.addEventListener("click", function (event) {
+        if (
+            !popup.contains(event.target) &&
+            !toggle.contains(event.target)
+        ) {
+            closeDownloadPopup();
+        }
+    });
+
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+            closeDownloadPopup();
+        }
+    });
+
+})();
